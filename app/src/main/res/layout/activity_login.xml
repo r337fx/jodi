@@ -81,6 +81,7 @@
                 android:background="@color/facebook"
                 android:text="Sign in with facebook"
                 android:textAllCaps="false"
+                android:onClick="loginwithfb"
                 android:textColor="@color/white"
                 android:textSize="15dp" />
             <Button
