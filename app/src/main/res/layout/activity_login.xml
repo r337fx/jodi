@@ -73,17 +73,10 @@
                 android:text="Lupa Password?"/>
 
             <!-- Link to Login Screen -->
-            <Button
-                android:id="@+id/btnLoginFacebook"
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/login_button" 
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dip"
-                android:background="@color/facebook"
-                android:text="Sign in with facebook"
-                android:textAllCaps="false"
-                android:onClick="loginwithfb"
-                android:textColor="@color/white"
-                android:textSize="15dp" />
+                android:layout_height="wrap_content" />
             <Button
                 android:id="@+id/btnLoginGoogle"
                 android:layout_width="fill_parent"
