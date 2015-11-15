@@ -21,6 +21,7 @@
     <string-array name="list_agama">
         <item>Islam</item>
         <item>Kristen</item>
+        <item>Katolik</item>
         <item>Hindu</item>
         <item>Budha</item>
     </string-array>
