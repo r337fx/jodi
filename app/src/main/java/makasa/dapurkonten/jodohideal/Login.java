@@ -27,7 +27,6 @@ public class Login extends AppCompatActivity {
 
 
     private EditText editTextUsername;
-    private EditText editTextEmail;
     private EditText editTextPassword;
 
     private Button buttonRegister;
