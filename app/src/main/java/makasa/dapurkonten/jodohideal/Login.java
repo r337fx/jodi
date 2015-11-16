@@ -85,6 +85,10 @@ public class Login extends AppCompatActivity {
         Intent i = new Intent(Login.this, Register.class);
         startActivity(i);
     }
+    public void main (View view){
+        Intent i = new Intent(Login.this, MainActivity.class);
+        startActivity(i);
+    }
     private void registerUser(){
         final String email = editTextUsername.getText().toString().trim();
         final String password = editTextPassword.getText().toString().trim();
