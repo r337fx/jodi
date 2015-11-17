@@ -69,6 +69,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:background="@null"
+                android:onClick="main"
                 android:textColor="@color/white"
                 android:text="Lupa Password?"/>
             <TextView
@@ -83,17 +84,12 @@
                 android:id="@+id/login_button"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" />
-            <Button
-                android:id="@+id/btnLoginGoogle"
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/sign_in_button"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dip"
-                android:background="@color/googleP"
-                android:text="Sign in with Google+"
-                android:textAllCaps="false"
-                android:onClick="loginfb"
-                android:textColor="@color/red"
-                android:textSize="15dp" />
+                android:layout_marginBottom="30dip"
+                />
             <Button
                 android:id="@+id/btnRegiter"
                 android:layout_width="fill_parent"
