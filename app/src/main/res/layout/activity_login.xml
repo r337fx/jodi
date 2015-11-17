@@ -72,11 +72,11 @@
                 android:textColor="@color/white"
                 android:text="Lupa Password?"/>
             <TextView
+                android:id="@+id/message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView"
                 android:textColor="@color/white"
-                android:text="tes"/>
+                android:text=""/>
 
             <!-- Link to Login Screen -->
             <com.facebook.login.widget.LoginButton
@@ -91,6 +91,7 @@
                 android:background="@color/googleP"
                 android:text="Sign in with Google+"
                 android:textAllCaps="false"
+                android:onClick="loginfb"
                 android:textColor="@color/red"
                 android:textSize="15dp" />
             <Button
