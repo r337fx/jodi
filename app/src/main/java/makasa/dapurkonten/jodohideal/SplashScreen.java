@@ -12,6 +12,7 @@ import android.view.View;
 public class SplashScreen extends AppCompatActivity {
 
     private static int SPLASH_TIME = 3000;
+    sessionmanager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +23,10 @@ public class SplashScreen extends AppCompatActivity {
 
             @Override
             public void run() {
-                Intent i = new Intent(SplashScreen.this, Login.class);
-                startActivity(i);
+                session = new sessionmanager(getApplicationContext());
+                session.checkLogin();
+                    Intent i = new Intent(SplashScreen.this, Login.class);
+                    startActivity(i);
 
                 // close this activity
                 finish();

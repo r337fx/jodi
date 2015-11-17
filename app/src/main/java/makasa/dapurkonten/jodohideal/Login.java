@@ -39,11 +39,13 @@ public class Login extends AppCompatActivity {
 
     private EditText editTextUsername;
     private EditText editTextPassword;
-
+    sessionmanager session;
     private Button buttonRegister;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        session = new sessionmanager(getApplicationContext());
+        session.checkLogin();
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         setContentView(R.layout.activity_login);
@@ -53,6 +55,7 @@ public class Login extends AppCompatActivity {
         editTextPassword = (EditText) findViewById(R.id.password);
 
         buttonRegister = (Button) findViewById(R.id.btnLogin);
+
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -99,7 +102,18 @@ public class Login extends AppCompatActivity {
                     public void onResponse(String response) {
                         //Toast.makeText(Login.this, response, Toast.LENGTH_LONG).show();
                         if(response.equals("1")){
-                            Toast.makeText(Login.this, "Success ", Toast.LENGTH_LONG).show();
+                            session.createUserLoginSession("Email",
+                                    "a@licious.id");
+
+                            // Starting MainActivity
+                            Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                            // Add new Flag to start new Activity
+                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(i);
+
+                            finish();
                         }
                         else{
                             Toast.makeText(Login.this, "Not Success", Toast.LENGTH_LONG).show();
