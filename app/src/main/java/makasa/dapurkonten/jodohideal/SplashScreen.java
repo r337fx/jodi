@@ -23,8 +23,8 @@ public class SplashScreen extends AppCompatActivity {
 
             @Override
             public void run() {
-                session = new sessionmanager(getApplicationContext());
-                session.checkLogin();
+                //session = new sessionmanager(getApplicationContext());
+                //session.checkLogin();
                     Intent i = new Intent(SplashScreen.this, Login.class);
                     startActivity(i);
 

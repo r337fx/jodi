@@ -31,21 +31,20 @@ import java.util.Map;
 public class Login extends AppCompatActivity {
     private static final String REGISTER_URL = "http://rupiadam.net/api/test.php";
 
-    public static final String KEY_USERNAME = "username";
-    public static final String KEY_PASSWORD = "password";
     private TextView info;
+    private EditText editTextUsername, editTextPassword;
+
+    //facebook punya
     private LoginButton loginButton;
     private CallbackManager callbackManager;
 
-    private EditText editTextUsername;
-    private EditText editTextPassword;
     sessionmanager session;
-    private Button buttonRegister;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        session = new sessionmanager(getApplicationContext());
-        session.checkLogin();
+        //session = new sessionmanager(getApplicationContext());
+        //session.checkLogin();
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         setContentView(R.layout.activity_login);
@@ -54,8 +53,7 @@ public class Login extends AppCompatActivity {
         editTextUsername = (EditText) findViewById(R.id.email);
         editTextPassword = (EditText) findViewById(R.id.password);
 
-        buttonRegister = (Button) findViewById(R.id.btnLogin);
-
+        // login dengan facebook
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -84,15 +82,20 @@ public class Login extends AppCompatActivity {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
+    // link menuju register
     public void register (View view){
         Intent i = new Intent(Login.this, Register.class);
         startActivity(i);
     }
+
+    //link menuju main activity
     public void main (View view){
         Intent i = new Intent(Login.this, MainActivity.class);
         startActivity(i);
     }
-    private void registerUser(){
+
+    //proses login
+    private void loginUser(){
         final String email = editTextUsername.getText().toString().trim();
         final String password = editTextPassword.getText().toString().trim();
 
@@ -127,10 +130,11 @@ public class Login extends AppCompatActivity {
                     }
                 }){
             @Override
+            //proses kirim parameter ke
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
-                params.put(KEY_USERNAME,email);
-                params.put(KEY_PASSWORD,password);
+                params.put("emial",email);
+                params.put("password",password);
                 return params;
             }
 
@@ -141,7 +145,7 @@ public class Login extends AppCompatActivity {
     }
 
     public void login (View view){
-        registerUser();
+        loginUser();
     }
 
 }
