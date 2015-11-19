@@ -40,9 +40,9 @@ public class MainActivity extends AppCompatActivity
 
         // get user data from session
         HashMap<String, String> user = session.getUserDetails();
-        String namaDepan = user.get(sessionmanager.SES_FIRST_NAME);
+        String firstName = user.get(sessionmanager.SES_FIRST_NAME);
 
-        coba.setText(namaDepan);
+        coba.setText(firstName);
 
         imageView = (ImageView) findViewById(R.id.imageView);
         Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.avatar);
@@ -110,14 +110,14 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camara) {
+        if (id == R.id.nav_home) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_chat) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_setting) {
 
-        } else if (id == R.id.nav_manage) {
-
+        } else if (id == R.id.nav_logout) {
+            session.logoutUser();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

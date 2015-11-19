@@ -68,8 +68,8 @@ public class Login extends AppCompatActivity {
                 Profile profile = Profile.getCurrentProfile();
                 info.setText(
                         "User ID: "
-                                + profile.getId()+
-                        "Nama:"+ profile.getName()
+                                + profile.getId() +
+                                "Nama:" + profile.getName()
                 );
             }
 
@@ -83,7 +83,6 @@ public class Login extends AppCompatActivity {
                 info.setText("Login attempt failed.");
             }
         });
-
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -116,18 +115,26 @@ public class Login extends AppCompatActivity {
 
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
-                            JSONObject dataUser = jsonResponse.getJSONObject("data");
-
                             //ambil nilai dari JSON respon API
-                            String  jodiStatus = jsonResponse.getString("status"),
-                                    jodiUserID = dataUser.getString("user_id"),
-                                    jodiEmail = dataUser.getString("email"),
-                                    jodiFirstName = dataUser.getString("first_name"),
-                                    jodiLastName = dataUser.getString("last_name"),
-                                    jodiGender = dataUser.getString("gender"),
-                                    jodiBirthday = dataUser.getString("birthday");
+                            String  jodiStatus = jsonResponse.getString("status");
 
-                            session.buatSesiLogin(jodiUserID, jodiEmail, jodiFirstName, jodiLastName, jodiGender, jodiBirthday);
+                                    if(jodiStatus.equals("success")) {
+                                        JSONObject dataUser = jsonResponse.getJSONObject("data");
+                                        String jodiUserID = dataUser.getString("user_id"),
+                                                jodiEmail = dataUser.getString("email"),
+                                                jodiFirstName = dataUser.getString("first_name"),
+                                                jodiLastName = dataUser.getString("last_name"),
+                                                jodiGender = dataUser.getString("gender"),
+                                                jodiBirthday = dataUser.getString("birth_date");
+                                        session.buatSesiLogin(jodiUserID, jodiEmail, jodiFirstName, jodiLastName, jodiGender, jodiBirthday);
+                                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                                        startActivity(i);
+                                        finish();
+                                    }
+                                    else{
+                                        String jodiMessage = jsonResponse.getString("message");
+                                        info.setText(jodiMessage);
+                                    }
 
 
                         } catch (JSONException e) {
@@ -145,8 +152,9 @@ public class Login extends AppCompatActivity {
             //proses kirim parameter ke
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
-                params.put("emial",email);
-                params.put("password",password);
+                params.put("jodiEmail",email);
+                params.put("jodiPassword",password);
+                params.put("jodiLogin","");
                 return params;
             }
 
@@ -158,9 +166,6 @@ public class Login extends AppCompatActivity {
 
     public void login (View view){
         loginUser();
-        Intent i = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(i);
-        finish();
     }
 
 }

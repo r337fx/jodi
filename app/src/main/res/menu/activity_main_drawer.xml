@@ -2,13 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-        <item android:id="@+id/nav_camara" android:icon="@android:drawable/ic_menu_camera"
+        <item android:id="@+id/nav_home" android:icon="@android:drawable/ic_menu_camera"
             android:title="Home" />
-        <item android:id="@+id/nav_gallery" android:icon="@android:drawable/ic_menu_gallery"
+        <item android:id="@+id/nav_chat" android:icon="@android:drawable/ic_menu_gallery"
             android:title="Chat" />
-        <item android:id="@+id/nav_slideshow" android:icon="@android:drawable/ic_menu_slideshow"
+        <item android:id="@+id/nav_setting" android:icon="@android:drawable/ic_menu_slideshow"
             android:title="Setting" />
-        <item android:id="@+id/nav_manage" android:icon="@android:drawable/ic_menu_manage"
+        <item android:id="@+id/nav_logout" android:icon="@android:drawable/ic_menu_manage"
             android:title="Logout" />
     </group>
 </menu>
