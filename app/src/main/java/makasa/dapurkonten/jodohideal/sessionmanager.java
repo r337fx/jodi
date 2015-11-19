@@ -30,11 +30,13 @@ public class sessionmanager {
     // All Shared Preferences Keys
     private static final String IS_USER_LOGIN = "IsUserLoggedIn";
 
-    // User name (make variable public to access from outside)
-    public static final String KEY_NAME = "name";
-
-    // Email address (make variable public to access from outside)
-    public static final String KEY_EMAIL = "email";
+    // make variable public to access from outside
+    public static final String SES_USER_ID = "user_id";
+    public static final String SES_EMAIL = "email";
+    public static final String SES_FIRST_NAME = "first_name";
+    public static final String SES_LAST_NAME = "last_name";
+    public static final String SES_GENDER= "gender";
+    public static final String SES_BIRTHDAY = "birthday";
 
     // Constructor
     public sessionmanager(Context context){
@@ -44,17 +46,19 @@ public class sessionmanager {
     }
 
     //Create login session
-    public void createUserLoginSession(String name, String email){
+    public void buatSesiLogin(String name, String email, String firstName, String lastName, String gender, String birthday){
         // Storing login value as TRUE
         editor.putBoolean(IS_USER_LOGIN, true);
 
-        // Storing name in pref
-        editor.putString(KEY_NAME, name);
+        // Simpen di file prefensi
+        editor.putString(SES_USER_ID, name);
+        editor.putString(SES_EMAIL, email);
+        editor.putString(SES_FIRST_NAME, firstName);
+        editor.putString(SES_LAST_NAME, lastName);
+        editor.putString(SES_GENDER, gender);
+        editor.putString(SES_BIRTHDAY, birthday);
 
-        // Storing email in pref
-        editor.putString(KEY_EMAIL, email);
-
-        // commit changes
+        // simpan nilai atau perubahan
         editor.commit();
     }
 
@@ -94,11 +98,13 @@ public class sessionmanager {
         //Use hashmap to store user credentials
         HashMap<String, String> user = new HashMap<String, String>();
 
-        // user name
-        user.put(KEY_NAME, pref.getString(KEY_NAME, null));
-
-        // user email id
-        user.put(KEY_EMAIL, pref.getString(KEY_EMAIL, null));
+        // user id
+        user.put(SES_USER_ID, pref.getString(SES_USER_ID, null));
+        user.put(SES_EMAIL, pref.getString(SES_EMAIL, null));
+        user.put(SES_FIRST_NAME, pref.getString(SES_FIRST_NAME, null));
+        user.put(SES_LAST_NAME, pref.getString(SES_LAST_NAME, null));
+        user.put(SES_GENDER, pref.getString(SES_GENDER, null));
+        user.put(SES_BIRTHDAY, pref.getString(SES_BIRTHDAY, null));
 
         // return user
         return user;

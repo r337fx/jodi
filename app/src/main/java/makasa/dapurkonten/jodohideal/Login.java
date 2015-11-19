@@ -17,11 +17,15 @@ import com.facebook.login.widget.LoginButton;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -29,10 +33,11 @@ import java.util.Map;
 
 
 public class Login extends AppCompatActivity {
-    private static final String REGISTER_URL = "http://rupiadam.net/api/test.php";
+    private static final String REGISTER_URL = "http://jodi.licious.id/api/";
 
     private TextView info;
     private EditText editTextUsername, editTextPassword;
+    private static String INI = Login.class.getSimpleName();
 
     //facebook punya
     private LoginButton loginButton;
@@ -43,8 +48,11 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //session = new sessionmanager(getApplicationContext());
+
+        //manggil sesion manager
+        session = new sessionmanager(getApplicationContext());
         //session.checkLogin();
+
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         setContentView(R.layout.activity_login);
@@ -103,23 +111,27 @@ public class Login extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        //Toast.makeText(Login.this, response, Toast.LENGTH_LONG).show();
-                        if(response.equals("1")){
-                            session.createUserLoginSession("Email",
-                                    "a@licious.id");
 
-                            // Starting MainActivity
-                            Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        Log.d(INI, response.toString());
 
-                            // Add new Flag to start new Activity
-                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(i);
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            JSONObject dataUser = jsonResponse.getJSONObject("data");
 
-                            finish();
-                        }
-                        else{
-                            Toast.makeText(Login.this, "Not Success", Toast.LENGTH_LONG).show();
+                            //ambil nilai dari JSON respon API
+                            String  jodiStatus = jsonResponse.getString("status"),
+                                    jodiUserID = dataUser.getString("user_id"),
+                                    jodiEmail = dataUser.getString("email"),
+                                    jodiFirstName = dataUser.getString("first_name"),
+                                    jodiLastName = dataUser.getString("last_name"),
+                                    jodiGender = dataUser.getString("gender"),
+                                    jodiBirthday = dataUser.getString("birthday");
+
+                            session.buatSesiLogin(jodiUserID, jodiEmail, jodiFirstName, jodiLastName, jodiGender, jodiBirthday);
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
                     }
                 },
@@ -146,6 +158,9 @@ public class Login extends AppCompatActivity {
 
     public void login (View view){
         loginUser();
+        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(i);
+        finish();
     }
 
 }

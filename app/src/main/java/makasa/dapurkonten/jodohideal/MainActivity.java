@@ -15,22 +15,40 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.facebook.FacebookSdk;
 
+import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
     roundimage round;
     ImageView imageView;
+    sessionmanager session;
+    TextView coba;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        coba = (TextView)findViewById(R.id.coba);
+        session = new sessionmanager(getApplicationContext());
+        //session.checkLogin();
+
+        // get user data from session
+        HashMap<String, String> user = session.getUserDetails();
+        String namaDepan = user.get(sessionmanager.SES_FIRST_NAME);
+
+        coba.setText(namaDepan);
+
         imageView = (ImageView) findViewById(R.id.imageView);
         Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.avatar);
         round = new roundimage(bm);
         imageView.setImageDrawable(round);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
