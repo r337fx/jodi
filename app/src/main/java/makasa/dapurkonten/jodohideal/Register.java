@@ -135,10 +135,7 @@ public class Register extends AppCompatActivity {
         requestQueue.add(requestDaftar);
     }
 
-    public void dob (View view){
-        DialogFragment dob = new datepicker();
-        dob.show(getFragmentManager(), "Date Picker");
-    }
+
     public void daftar(View view){
         //dapatkan value terakhir pada saat button di klik
         String firstName = inputFirstName.getText().toString().trim();
@@ -186,5 +183,8 @@ public class Register extends AppCompatActivity {
             info.show();
         }
     }
-
+    public void dob (View view){
+        DialogFragment dob = new datepicker();
+        dob.show(getFragmentManager(), "Date Picker");
+    }
 }

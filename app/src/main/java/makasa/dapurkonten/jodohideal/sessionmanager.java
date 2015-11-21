@@ -5,10 +5,13 @@ package makasa.dapurkonten.jodohideal;
  */
 import java.util.HashMap;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.widget.Toast;
 
 public class sessionmanager {
 
@@ -98,6 +101,21 @@ public class sessionmanager {
             return false;
         }
     }
+    public void checkLoginMain(){
+        // Check login status
+        if(!this.isUserLoggedIn()){
+            // user is not logged in redirect him to Login Activity
+            Intent i = new Intent(_context, Login.class);
+            // Closing all the Activities
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+            // Add new Flag to start new Activity
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            // Staring Login Activity
+            _context.startActivity(i);
+        }
+    }
 
 
 
@@ -148,4 +166,6 @@ public class sessionmanager {
     public boolean isUserLoggedIn(){
         return pref.getBoolean(IS_USER_LOGIN, false);
     }
+
+
 }

@@ -1,10 +1,12 @@
 package makasa.dapurkonten.jodohideal;
 
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.FacebookSdk;
 
@@ -37,6 +40,7 @@ public class MainActivity extends AppCompatActivity
         coba = (TextView)findViewById(R.id.coba);
         session = new sessionmanager(getApplicationContext());
         //session.checkLogin();
+        session.checkLoginMain();
 
         // get user data from session
         HashMap<String, String> user = session.getUserDetails();
@@ -45,9 +49,9 @@ public class MainActivity extends AppCompatActivity
         coba.setText(firstName);
 
         imageView = (ImageView) findViewById(R.id.imageView);
-        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.avatar);
-        round = new roundimage(bm);
-        imageView.setImageDrawable(round);
+        //Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.avatar);
+        //round = new roundimage(bm);
+        //imageView.setImageDrawable(round);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -72,7 +76,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    @Override
+    /**@Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -80,7 +84,7 @@ public class MainActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
-    }
+    }**/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -124,4 +128,6 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }
