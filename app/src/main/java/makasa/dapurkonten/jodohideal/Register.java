@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -27,17 +28,20 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class Register extends AppCompatActivity {
 
-    private EditText inputFirstName, inputLastName, inputEmail, inputPhoneNumber, inputFpassword, inputLpassword, inputBirthDay;
+    private EditText inputFirstName, inputLastName, inputEmail, inputPhoneNumber, inputFpassword, inputLpassword;
     private CheckBox agreement;
     private RadioGroup rgSex;
     private RadioButton rbGender;
-    private Button btnRegister;
-    private String urlApi ="http://jodi.licious.id/api/register.php";
+    private Button btnRegister,inputBirthDay;
+    private String urlApi ="http://jodi.licious.id/api/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,14 +59,14 @@ public class Register extends AppCompatActivity {
         agreement = (CheckBox)findViewById(R.id.agreement);
         rgSex = (RadioGroup)findViewById(R.id.sex);
         btnRegister = (Button)findViewById(R.id.register);
+        inputBirthDay = (Button)findViewById(R.id.birthday);
 
         agreement.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
+                if (isChecked) {
                     btnRegister.setEnabled(true);
-                }
-                else {
+                } else {
                     btnRegister.setEnabled(false);
                 }
             }
@@ -73,41 +77,34 @@ public class Register extends AppCompatActivity {
 
 
     private void registerUser(final String firstName, final String lastName, final String email,
-                              final String phoneNumber, final String firstPassword, final String lastPassword, final String birthDay, final String gender){
+                              final String phoneNumber, final String firstPassword,final String birthDay, final String gender){
 
 
         StringRequest requestDaftar = new StringRequest(Request.Method.POST, urlApi,
-                //respon
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String jawabanAPI) {
-                        if (jawabanAPI.equals("1")) {
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
 
-                            AlertDialog info = new AlertDialog.Builder(Register.this).create();
-                            info.setTitle("Jodoh Ideal");
-                            info.setMessage("Selamat bergabung dengan Jodoh Ideal!!!\n " +
-                                    "Untuk melanjutkan registrasi, silahkan konfirmasi email Anda ("+ email +").");
-                            info.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.dismiss();
-                                        }
-                                    });
-                            info.show();
-                        } else {
-                            AlertDialog info = new AlertDialog.Builder(Register.this).create();
-                            info.setTitle("Jodoh Ideal");
-                            info.setMessage("Maaf, terjadi kesalahan pada saat pendaftaran. Silahkan hubungi tim Jodoh Ideal.");
-                            info.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.dismiss();
-                                        }
-                                    });
-                            info.show();
-                        }
-                    }
-                },
+
+                                try {
+                                    JSONObject jsonResponse = new JSONObject(response);
+                                    //ambil nilai dari JSON respon API
+                                    String  jodiStatus = jsonResponse.getString("status");
+
+                                    if(jodiStatus.equals("success")) {
+                                        Toast.makeText(Register.this,jodiStatus,Toast.LENGTH_LONG).show();
+                                    }
+                                    else{
+                                        String jodiMessage = jsonResponse.getString("message");
+                                        Toast.makeText(Register.this,jodiMessage,Toast.LENGTH_LONG).show();
+                                    }
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
@@ -118,13 +115,14 @@ public class Register extends AppCompatActivity {
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
                 //parameter, nilai
-                params.put("firstName", firstName);
-                params.put("lastName", lastName);
-                params.put("email", email);
-                params.put("phoneNumber", phoneNumber);
-                params.put("password", firstPassword);
-                params.put("birthday", birthDay);
-                params.put("gender", gender);
+                params.put("jodiFName", firstName);
+                params.put("jodiLName", lastName);
+                params.put("jodiEmail", email);
+                params.put("jodiPhone", phoneNumber);
+                params.put("jodiPassword", firstPassword);
+                params.put("jodiDOB", birthDay);
+                params.put("jodiGender", gender);
+                params.put("jodiRegister","");
 
                 return params;
             }
@@ -152,10 +150,10 @@ public class Register extends AppCompatActivity {
 
         //cek untuk pastikan user mengisi seluruh form
         if (!firstName.isEmpty() && !lastName.isEmpty() && !email.isEmpty() && !phoneNumber.isEmpty()
-                && !firstPassword.isEmpty() && !lastPassword.isEmpty() && !birthDay.isEmpty() ){
+                && !firstPassword.isEmpty() && !lastPassword.isEmpty() && !birthDay.equals("Date of Birth") ){
             if (firstPassword.equals(lastPassword)){
 
-                registerUser(firstName, lastName, email, phoneNumber, firstPassword, lastPassword, birthDay, gender);
+                registerUser(firstName, lastName, email, phoneNumber, firstPassword, birthDay, gender);
             }
             else {
                 AlertDialog infoPass = new AlertDialog.Builder(Register.this).create();
