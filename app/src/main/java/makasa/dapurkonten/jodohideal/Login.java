@@ -17,12 +17,15 @@ import com.facebook.login.widget.LoginButton;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -44,7 +47,7 @@ public class Login extends AppCompatActivity {
     private TextView info;
     private EditText editTextUsername, editTextPassword;
     private static String INI = Login.class.getSimpleName();
-
+    TelephonyManager tel;
     //facebook punya
     private LoginButton loginButton;
     private CallbackManager callbackManager;
@@ -54,7 +57,7 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        tel = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         //manggil sesion manager
         session = new sessionmanager(getApplicationContext());
         //session.checkLogin();
@@ -66,7 +69,8 @@ public class Login extends AppCompatActivity {
         loginButton = (LoginButton)findViewById(R.id.login_button);
         editTextUsername = (EditText) findViewById(R.id.email);
         editTextPassword = (EditText) findViewById(R.id.password);
-
+        info.setText(tel.getSubscriberId().toString()); //IMSI
+        //tel.getLine1Number()//phonenumber
         // login dengan facebook
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -109,6 +113,10 @@ public class Login extends AppCompatActivity {
 
     //proses login
     private void loginUser(){
+        final ProgressDialog progressDialog = new ProgressDialog(Login.this);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Authenticating...");
+        progressDialog.show();
         final String email = editTextUsername.getText().toString().trim();
         final String password = editTextPassword.getText().toString().trim();
 
@@ -116,7 +124,7 @@ public class Login extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
+                        progressDialog.dismiss();
                         Log.d(INI, response.toString());
 
                         try {
