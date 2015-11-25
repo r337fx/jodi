@@ -107,7 +107,7 @@ public class Login extends AppCompatActivity {
 
     //link menuju main activity
     public void main (View view){
-        Intent i = new Intent(Login.this, MainActivity.class);
+        Intent i = new Intent(Login.this, EditProfile.class);
         startActivity(i);
     }
 
