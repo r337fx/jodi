@@ -2,6 +2,7 @@ package makasa.dapurkonten.jodohideal;
 
 import android.app.AlertDialog;
 import android.app.DialogFragment;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -78,13 +79,16 @@ public class Register extends AppCompatActivity {
 
     private void registerUser(final String firstName, final String lastName, final String email,
                               final String phoneNumber, final String firstPassword,final String birthDay, final String gender){
-
+        final ProgressDialog progressDialog = new ProgressDialog(Register.this);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Please wait...");
+        progressDialog.show();
 
         StringRequest requestDaftar = new StringRequest(Request.Method.POST, urlApi,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-
+                                progressDialog.dismiss();
 
                                 try {
                                     JSONObject jsonResponse = new JSONObject(response);
@@ -108,7 +112,7 @@ public class Register extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        Toast.makeText(Register.this,volleyError.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(Register.this,"Please check your connection",Toast.LENGTH_LONG).show();
                     }
                 }
         ){

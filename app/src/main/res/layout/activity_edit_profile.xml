@@ -14,7 +14,7 @@
 
     </android.support.design.widget.AppBarLayout>
     <ScrollView
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="60dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -104,7 +104,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:entries="@array/boolean_option">
+                android:entries="@array/list_ya_tidak">
 
             </Spinner>
         </LinearLayout>
@@ -123,7 +123,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:entries="@array/boolean_option">
+                android:entries="@array/list_ya_tidak">
 
             </Spinner>
         </LinearLayout>
@@ -142,7 +142,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:entries="@array/ramalan">
+                android:entries="@array/list_horoskop">
 
             </Spinner>
         </LinearLayout>
