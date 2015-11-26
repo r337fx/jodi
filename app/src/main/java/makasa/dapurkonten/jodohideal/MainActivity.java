@@ -34,51 +34,59 @@ import com.facebook.FacebookSdk;
 
 import java.util.HashMap;
 
+import makasa.dapurkonten.jodohideal.app.SQLiteController;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     roundimage round;
     ImageView imageView;
     sessionmanager session;
+    private SQLiteController db;
     TextView txtNama, txtTinggi, txtLokasi,txtHoroskop, txtPekerjaan, txtAgama, txtDrawerNama,txtDrawerEmail;
 
-
-    Integer[] imageIDs = {
-            R.drawable.sample_pic1,
-            R.drawable.sample_pic2,
-            R.drawable.sample_pic3,
-            R.drawable.sample_pic4,
-            R.drawable.sample_pic1,
-            R.drawable.sample_pic2,
-            R.drawable.sample_pic3,
-            R.drawable.sample_pic4,
-            R.drawable.sample_pic1,
-            R.drawable.sample_pic2
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        db = new SQLiteController(getApplicationContext());
+
         session = new sessionmanager(getApplicationContext());
         //session.checkLogin();
         session.checkLoginMain();
 
-        // get user data from session
+        // tarik data user dari sqlite
+        HashMap<String, String> profile = db.getUserDetails();
+        String id = profile.get("id");
+        String gender = profile.get("gender");
+        String age = profile.get("age");
+        String race = profile.get("race");
+        String religion = profile.get("religion");
+        String height = profile.get("height");
+        String location = profile.get("location");
+        String horoscope = profile.get("horoscope");
+        String job = profile.get("job");
+       // String userDetail = profile.get("user_detail");
+
+        // tarik data user dari session
         HashMap<String, String> user = session.getUserDetails();
         String firstName = user.get(sessionmanager.SES_FIRST_NAME);
         String lastname = user.get(sessionmanager.SES_LAST_NAME);
         String email = user.get(sessionmanager.SES_EMAIL);
 
+
         //set dalam textview
         txtNama = (TextView)findViewById(R.id.txtProfilNama);
         txtDrawerNama = (TextView)findViewById(R.id.txtDrawerNama);
         txtDrawerEmail = (TextView)findViewById(R.id.txtDrawerEmail);
+        txtLokasi = (TextView)findViewById(R.id.txtProfilLokasi);
 
         txtNama.setText(firstName + " " + lastname);
         txtDrawerNama.setText(firstName);
         txtDrawerEmail.setText(email);
+        txtLokasi.setText(location);
 
         imageView = (ImageView) findViewById(R.id.imageView);
         //Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.avatar);
