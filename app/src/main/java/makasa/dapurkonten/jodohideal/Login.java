@@ -21,6 +21,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -77,7 +78,7 @@ public class Login extends AppCompatActivity {
         loginButton = (LoginButton)findViewById(R.id.login_button);
         editTextUsername = (EditText) findViewById(R.id.email);
         editTextPassword = (EditText) findViewById(R.id.password);
-        info.setText(tel.getSubscriberId().toString()); //IMSI
+        //info.setText(tel.getSubscriberId().toString()); //IMSI
         //tel.getLine1Number()//phonenumber
 
         // login dengan facebook
@@ -106,7 +107,7 @@ public class Login extends AppCompatActivity {
                                                 jodiBirthday = dataUser.getString("birth_date");
                                         session.buatSesiLogin(jodiUserID, jodiEmail, jodiFirstName, jodiLastName, jodiGender, jodiBirthday);
                                         Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                                        shownotification();
+                                        //shownotification();
                                         startActivity(i);
                                         finish();
                                     }
@@ -216,12 +217,12 @@ public class Login extends AppCompatActivity {
                                         session.buatSesiLogin(jodiUserID, jodiEmail, jodiFirstName,
                                                 jodiLastName, jodiGender, jodiBirthday);
 
-                                        db.addUser(jodiUserID, jodiFirstName,jodiLastName, jodiEmail, profileGender,
+                                        db.addUser(jodiUserID, jodiFirstName, jodiLastName, jodiEmail, profileGender,
                                                 profileAge, profileRace, profileReligion, profileHeight, profileLocation,
                                                 profileHoroscope, profileJob, profileDetail);
 
                                         Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                                        shownotification();
+                                        //shownotification();
                                         startActivity(i);
                                         finish();
                                     }
