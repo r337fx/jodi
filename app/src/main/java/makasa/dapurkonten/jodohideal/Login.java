@@ -21,6 +21,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -77,19 +78,69 @@ public class Login extends AppCompatActivity {
         loginButton = (LoginButton)findViewById(R.id.login_button);
         editTextUsername = (EditText) findViewById(R.id.email);
         editTextPassword = (EditText) findViewById(R.id.password);
-        info.setText(tel.getSubscriberId().toString()); //IMSI
+        //info.setText(tel.getSubscriberId().toString()); //IMSI
         //tel.getLine1Number()//phonenumber
 
         // login dengan facebook
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Profile profile = Profile.getCurrentProfile();
-                info.setText(
-                        "User ID: "
-                                + profile.getId() +
-                                "Nama:" + profile.getName()
-                );
+                final Profile profile = Profile.getCurrentProfile();
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, REGISTER_URL,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                Log.d(INI, response.toString());
+
+                                try {
+                                    JSONObject jsonResponse = new JSONObject(response);
+                                    //ambil nilai dari JSON respon API
+                                    String  jodiStatus = jsonResponse.getString("status");
+
+                                    if(jodiStatus.equals("success")) {
+                                        JSONObject dataUser = jsonResponse.getJSONObject("data");
+                                        String jodiUserID = dataUser.getString("user_id"),
+                                                jodiEmail = dataUser.getString("email"),
+                                                jodiFirstName = dataUser.getString("first_name"),
+                                                jodiLastName = dataUser.getString("last_name"),
+                                                jodiGender = dataUser.getString("gender"),
+                                                jodiBirthday = dataUser.getString("birth_date");
+                                        session.buatSesiLogin(jodiUserID, jodiEmail, jodiFirstName, jodiLastName, jodiGender, jodiBirthday);
+                                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                                        //shownotification();
+                                        startActivity(i);
+                                        finish();
+                                    }
+                                    else{
+                                        String jodiMessage = jsonResponse.getString("message");
+                                        info.setText(jodiMessage);
+                                    }
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(Login.this,error.toString(),Toast.LENGTH_LONG).show();
+                            }
+                        }){
+                    @Override
+                    //proses kirim parameter ke
+                    protected Map<String,String> getParams(){
+                        Map<String,String> params = new HashMap<String, String>();
+                        params.put("jodiFBUserid",profile.getId());
+                        params.put("jodiFBFirstName",profile.getFirstName());
+                        params.put("jodiFBLastName",profile.getLastName());
+                        params.put("jodiFBLogin", "");
+                        return params;
+                    }
+
+
+                };
             }
 
             @Override
@@ -166,12 +217,12 @@ public class Login extends AppCompatActivity {
                                         session.buatSesiLogin(jodiUserID, jodiEmail, jodiFirstName,
                                                 jodiLastName, jodiGender, jodiBirthday);
 
-                                        db.addUser(jodiUserID, jodiFirstName,jodiLastName, jodiEmail, profileGender,
+                                        db.addUser(jodiUserID, jodiFirstName, jodiLastName, jodiEmail, profileGender,
                                                 profileAge, profileRace, profileReligion, profileHeight, profileLocation,
                                                 profileHoroscope, profileJob, profileDetail);
 
                                         Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                                        shownotification();
+                                        //shownotification();
                                         startActivity(i);
                                         finish();
                                     }
