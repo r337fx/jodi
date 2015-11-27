@@ -40,6 +40,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import makasa.dapurkonten.jodohideal.app.SQLiteController;
+
 
 public class Login extends AppCompatActivity {
     private static final String REGISTER_URL = "http://jodi.licious.id/api/";
@@ -48,19 +50,25 @@ public class Login extends AppCompatActivity {
     private EditText editTextUsername, editTextPassword;
     private static String INI = Login.class.getSimpleName();
     TelephonyManager tel;
+
     //facebook punya
     private LoginButton loginButton;
     private CallbackManager callbackManager;
 
     sessionmanager session;
 
+    private SQLiteController db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         tel = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+
         //manggil sesion manager
         session = new sessionmanager(getApplicationContext());
         //session.checkLogin();
+
+        db = new SQLiteController(getApplicationContext());
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
@@ -71,6 +79,7 @@ public class Login extends AppCompatActivity {
         editTextPassword = (EditText) findViewById(R.id.password);
         info.setText(tel.getSubscriberId().toString()); //IMSI
         //tel.getLine1Number()//phonenumber
+
         // login dengan facebook
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -184,13 +193,33 @@ public class Login extends AppCompatActivity {
 
                                     if(jodiStatus.equals("success")) {
                                         JSONObject dataUser = jsonResponse.getJSONObject("data");
+                                        JSONObject profileUser = jsonResponse.getJSONObject("profile");
+
                                         String jodiUserID = dataUser.getString("user_id"),
                                                 jodiEmail = dataUser.getString("email"),
                                                 jodiFirstName = dataUser.getString("first_name"),
                                                 jodiLastName = dataUser.getString("last_name"),
                                                 jodiGender = dataUser.getString("gender"),
                                                 jodiBirthday = dataUser.getString("birth_date");
-                                        session.buatSesiLogin(jodiUserID, jodiEmail, jodiFirstName, jodiLastName, jodiGender, jodiBirthday);
+
+                                        String profileAge = profileUser.getString("age"),
+                                                profileGender = profileUser.getString("gender"),
+                                                profileRace = profileUser.getString("race_name"),
+                                                profileReligion = profileUser.getString("religion"),
+                                                profileHeight = profileUser.getString("height"),
+                                                profileLocation = profileUser.getString("loc_name"),
+                                                profileHoroscope = profileUser.getString("horoscope_name"),
+                                                profileJob = profileUser.getString("job_name"),
+                                                profileDetail = profileUser.getString("user_detail");
+
+
+                                        session.buatSesiLogin(jodiUserID, jodiEmail, jodiFirstName,
+                                                jodiLastName, jodiGender, jodiBirthday);
+
+                                        db.addUser(jodiUserID, jodiFirstName,jodiLastName, jodiEmail, profileGender,
+                                                profileAge, profileRace, profileReligion, profileHeight, profileLocation,
+                                                profileHoroscope, profileJob, profileDetail);
+
                                         Intent i = new Intent(getApplicationContext(), MainActivity.class);
                                         shownotification();
                                         startActivity(i);
