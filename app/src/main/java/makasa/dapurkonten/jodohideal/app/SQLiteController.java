@@ -80,6 +80,7 @@ public class SQLiteController extends SQLiteOpenHelper {
 
     /**
      * Simpen detail user ke tabel
+     * cek pada sqlite editor ok
      * */
 
     public void addUser(String id, String fname, String lname, String email,
@@ -111,7 +112,7 @@ public class SQLiteController extends SQLiteOpenHelper {
     }
 
     /**
-     * Getting user data from database
+     * fix problem get user data
      * */
 
     public HashMap<String, String> getUserDetails() {
@@ -125,19 +126,19 @@ public class SQLiteController extends SQLiteOpenHelper {
         // ibarat fetch array mysql
         cursor.moveToFirst();
         if (cursor.getCount() > 0) {
-            user.put("id", cursor.getString(1));
-            user.put("first_name", cursor.getString(2));
-            user.put("last_name", cursor.getString(3));
-            user.put("email", cursor.getString(4));
-            user.put("gender", cursor.getString(5));
-            user.put("age", cursor.getString(6));
-            user.put("race", cursor.getString(7));
-            user.put("religion", cursor.getString(8));
-            user.put("height", cursor.getString(9));
-            user.put("location", cursor.getString(10));
-            user.put("horoscope", cursor.getString(11));
-            user.put("job", cursor.getString(12));
-           // user.put("user_detail", cursor.getString(13));
+            user.put("id", cursor.getString(0));
+            user.put("first_name", cursor.getString(1));
+            user.put("last_name", cursor.getString(2));
+            user.put("email", cursor.getString(3));
+            user.put("gender", cursor.getString(4));
+            user.put("age", cursor.getString(5));
+            user.put("race", cursor.getString(6));
+            user.put("religion", cursor.getString(7));
+            user.put("height", cursor.getString(8));
+            user.put("location", cursor.getString(9));
+            user.put("horoscope", cursor.getString(10));
+            user.put("job", cursor.getString(11));
+            user.put("user_detail", cursor.getString(12));
 
         }
         cursor.close();

@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity
         String location = profile.get("location");
         String horoscope = profile.get("horoscope");
         String job = profile.get("job");
-       // String userDetail = profile.get("user_detail");
+        String userDetail = profile.get("user_detail");
 
         // tarik data user dari session
         HashMap<String, String> user = session.getUserDetails();
