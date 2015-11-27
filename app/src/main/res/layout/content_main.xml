@@ -104,50 +104,51 @@
                 android:layout_marginLeft="@dimen/pad_5dp"
                 android:text="Profile Name" />
 
+
+
             <TextView
-                android:id="@+id/txtProfilLokasi"
+            android:id="@+id/txtProfilLokasi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/pad_5dp"
+            android:gravity="center"
+            android:text="Lokasi"
+            android:drawableLeft="@drawable/ic_place_dk"
+            android:drawablePadding="@dimen/pad_3dp"
+            style="@style/lbl_14gray" />
+
+            <TextView
+                android:textSize="@dimen/txt_16sp"
+                android:id="@+id/lbl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/pad_5dp"
-                android:text="Lokasi"
-                android:drawableLeft="@drawable/ic_place_dk"
-                android:drawablePadding="@dimen/pad_3dp"
+                android:text="Tentang Kamu"
+                android:gravity="center"
+                android:drawableLeft="@drawable/ic_person_dk"
                 style="@style/lbl_14gray" />
 
-            <RelativeLayout
-                android:id="@+id/rel"
+            <TextView
+                android:id="@+id/txtProfilTentang"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/pad_20dp">
+                android:layout_marginTop="@dimen/pad_3dp"
+                android:text="Tentang"
+                android:layout_below="@+id/lbl"
+                android:layout_alignLeft="@+id/lbl"
+                style="@style/lbl_14gray"
+                />
 
-                <ImageView
-                    android:id="@+id/imageView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_person_dk" />
-
-                <TextView
-                    android:textSize="@dimen/txt_16sp"
-                    android:id="@+id/lbl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/pad_5dp"
-                    android:text="About"
-                    android:layout_toRightOf="@+id/imageView1"
-                    style="@style/lbl_14gray" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/pad_3dp"
-                    android:text="@string/lorem_ipusm"
-                    android:layout_below="@+id/lbl"
-                    android:layout_alignLeft="@+id/lbl"
-                    style="@style/lbl_14gray"
-                    />
-            </RelativeLayout>
-
-
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/pad_5dp"
+                android:gravity="center"
+                android:text="Pasangan Yang Cocok"
+                android:drawableLeft="@drawable/ic_heart_dk"
+                android:drawablePadding="@dimen/pad_3dp"
+                style="@style/lbl_14gray" />
 
         </LinearLayout>
     </LinearLayout>

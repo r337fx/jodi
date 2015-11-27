@@ -1,4 +1,11 @@
-<LinearLayout
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:fitsSystemWindows="true"
+    tools:context=".MainActivity">
+
+    <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -122,13 +129,13 @@
                 android:id="@+id/birthday"
                 android:drawableLeft="@drawable/ic_cake"
                 android:layout_width="fill_parent"
+                android:gravity="left"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="1px"
-                android:background="@null"
+                android:background="@color/white"
                 android:padding="10dp"
                 android:text="Date of Birth"
                 android:onClick="dob"
-                android:textColor="@color/input_login" />
+                android:textColor="@color/input_login_hint" />
 
             <RadioGroup
                 android:id="@+id/sex"
@@ -137,6 +144,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
+                android:layout_marginTop="-3dp"
                 android:background="@color/white">
                 <TextView
                     android:layout_weight="1"
@@ -189,3 +197,4 @@
 
 
 </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

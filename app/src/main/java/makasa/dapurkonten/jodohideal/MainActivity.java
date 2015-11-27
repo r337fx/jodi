@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity
     ImageView imageView;
     sessionmanager session;
     private SQLiteController db;
-    TextView txtNama, txtTinggi, txtLokasi,txtHoroskop, txtPekerjaan, txtAgama, txtDrawerNama,txtDrawerEmail;
+    TextView txtNama, txtTinggi, txtLokasi,txtHoroskop, txtPekerjaan, txtAgama, txtTentang, txtDrawerNama,txtDrawerEmail;
 
 
     @Override
@@ -82,11 +82,13 @@ public class MainActivity extends AppCompatActivity
         txtDrawerNama = (TextView)findViewById(R.id.txtDrawerNama);
         txtDrawerEmail = (TextView)findViewById(R.id.txtDrawerEmail);
         txtLokasi = (TextView)findViewById(R.id.txtProfilLokasi);
+        txtTentang = (TextView)findViewById(R.id.txtProfilTentang);
 
-        txtNama.setText(firstName + " " + lastname);
+        txtNama.setText(firstName + " " + lastname + "," + age);
         txtDrawerNama.setText(firstName);
         txtDrawerEmail.setText(email);
         txtLokasi.setText(location);
+        txtTentang.setText(userDetail);
 
         imageView = (ImageView) findViewById(R.id.imageView);
         //Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.avatar);
@@ -100,8 +102,8 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Edit Profile", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent ed = new Intent(getApplicationContext(), EditProfile.class);
+                startActivity(ed);
             }
         });
 
@@ -156,12 +158,19 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            // Handle the camera action
-        } else if (id == R.id.nav_chat) {
 
-        } else if (id == R.id.nav_setting) {
+        }
+        else if (id == R.id.nav_profile) {
 
-        } else if (id == R.id.nav_logout) {
+        }
+        else if (id == R.id.nav_pasangan) {
+
+        }
+        else if (id == R.id.nav_chat){
+            Intent cht = new Intent(getApplicationContext(), Chat.class);
+            startActivity(cht);
+        }
+        else if (id == R.id.nav_logout) {
             session.logoutUser();
         }
 
