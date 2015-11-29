@@ -171,6 +171,7 @@ public class MainActivity extends AppCompatActivity
             startActivity(cht);
         }
         else if (id == R.id.nav_logout) {
+            db.deleteUsers();
             session.logoutUser();
         }
 
