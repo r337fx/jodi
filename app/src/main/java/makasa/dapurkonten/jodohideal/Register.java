@@ -43,6 +43,7 @@ public class Register extends AppCompatActivity {
     private RadioButton rbGender;
     private Button btnRegister,inputBirthDay;
     private String urlApi ="http://jodi.licious.id/api/";
+    sessionmanager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +51,7 @@ public class Register extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        session = new sessionmanager(getApplicationContext());
         inputFirstName = (EditText)findViewById(R.id.firstName);
         inputLastName = (EditText)findViewById(R.id.lastName);
         inputEmail = (EditText)findViewById(R.id.email);
@@ -97,6 +98,10 @@ public class Register extends AppCompatActivity {
 
                                     if(jodiStatus.equals("success")) {
                                         Toast.makeText(Register.this,jodiStatus,Toast.LENGTH_LONG).show();
+                                        //session.buatSesiLogin(inputEmail, inputFirstName, inputLastName, rgSex, inputBirthDay);
+                                        Intent i = new Intent(getApplicationContext(),EditProfile.class);
+                                        startActivity(i);
+                                        finish();
                                     }
                                     else{
                                         String jodiMessage = jsonResponse.getString("message");

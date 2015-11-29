@@ -107,6 +107,7 @@ public class Login extends AppCompatActivity {
                                                 jodiBirthday = dataUser.getString("birth_date");
                                         session.buatSesiLogin(jodiUserID, jodiEmail, jodiFirstName, jodiLastName, jodiGender, jodiBirthday);
                                         Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                                        Log.d(INI, response.toString());
                                         //shownotification();
                                         startActivity(i);
                                         finish();
@@ -132,10 +133,10 @@ public class Login extends AppCompatActivity {
                     //proses kirim parameter ke
                     protected Map<String,String> getParams(){
                         Map<String,String> params = new HashMap<String, String>();
-                        params.put("jodiFBUserid",profile.getId());
-                        params.put("jodiFBFirstName",profile.getFirstName());
-                        params.put("jodiFBLastName",profile.getLastName());
-                        params.put("jodiFBLogin", "");
+                        params.put("jodiIDSocmed",profile.getId());
+                        params.put("jodiFName",profile.getFirstName());
+                        params.put("jodiLName",profile.getLastName());
+                        params.put("jodiLoginFB", "");
                         return params;
                     }
 
@@ -201,30 +202,35 @@ public class Login extends AppCompatActivity {
                                                 jodiFirstName = dataUser.getString("first_name"),
                                                 jodiLastName = dataUser.getString("last_name"),
                                                 jodiGender = dataUser.getString("gender"),
-                                                jodiBirthday = dataUser.getString("birth_date");
-
-                                        String profileAge = profileUser.getString("age"),
-                                                profileGender = profileUser.getString("gender"),
-                                                profileRace = profileUser.getString("race_name"),
-                                                profileReligion = profileUser.getString("religion"),
-                                                profileHeight = profileUser.getString("height"),
-                                                profileLocation = profileUser.getString("loc_name"),
-                                                profileHoroscope = profileUser.getString("horoscope_name"),
-                                                profileJob = profileUser.getString("job_name"),
-                                                profileDetail = profileUser.getString("user_detail");
-
-
+                                                jodiBirthday = dataUser.getString("birth_date"),
+                                                jodiIsFillProfile = dataUser.getString("is_fillprofile");
                                         session.buatSesiLogin(jodiUserID, jodiEmail, jodiFirstName,
                                                 jodiLastName, jodiGender, jodiBirthday);
+                                        if(jodiIsFillProfile.equals("0")){
+                                            Intent i = new Intent(getApplicationContext(), EditProfile.class);
+                                            startActivity(i);
+                                            finish();
+                                        }
+                                        else {
+                                            String profileAge = profileUser.getString("age"),
+                                                    profileGender = profileUser.getString("gender"),
+                                                    profileRace = profileUser.getString("race_name"),
+                                                    profileReligion = profileUser.getString("religion"),
+                                                    profileHeight = profileUser.getString("height"),
+                                                    profileLocation = profileUser.getString("loc_name"),
+                                                    profileHoroscope = profileUser.getString("horoscope_name"),
+                                                    profileJob = profileUser.getString("job_name"),
+                                                    profileDetail = profileUser.getString("user_detail");
 
-                                        db.addUser(jodiUserID, jodiFirstName, jodiLastName, jodiEmail, profileGender,
-                                                profileAge, profileRace, profileReligion, profileHeight, profileLocation,
-                                                profileHoroscope, profileJob, profileDetail);
+                                            db.addUser(jodiUserID, jodiFirstName, jodiLastName, jodiEmail, profileGender,
+                                                    profileAge, profileRace, profileReligion, profileHeight, profileLocation,
+                                                    profileHoroscope, profileJob, profileDetail);
 
-                                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                                        //shownotification();
-                                        startActivity(i);
-                                        finish();
+                                            Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                                            //shownotification();
+                                            startActivity(i);
+                                            finish();
+                                        }
                                     }
                                     else{
                                         String jodiMessage = jsonResponse.getString("message");

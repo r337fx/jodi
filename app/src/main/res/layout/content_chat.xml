@@ -17,7 +17,6 @@
         android:textSize="@dimen/txt_14sp"
         android:textColor="@color/white"
         android:gravity="center_vertical"
-        android:background="@drawable/chat_bg_rcv"
         android:paddingLeft="@dimen/pad_15dp"
         android:paddingTop="@dimen/pad_5dp"
         android:paddingRight="@dimen/pad_5dp"
@@ -26,14 +25,16 @@
         android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:text="text "
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10dp"
+    />
+    <!--android:background="@drawable/chat_bg_rcv"-->
+
 
     <TextView
         android:textSize="@dimen/txt_14sp"
         android:textColor="@color/gray_dk"
         android:gravity="center_vertical"
         android:layout_gravity="right"
-        android:background="@drawable/chat_bg_send"
         android:paddingLeft="@dimen/pad_10dp"
         android:paddingTop="@dimen/pad_5dp"
         android:paddingRight="@dimen/pad_15dp"
@@ -41,6 +42,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxWidth="@dimen/pad_200dp"
-        android:text="text text texttext text text texttexttexttext " />
+        android:text="text text texttext text text texttexttexttext "
+    />
+    <!--android:background="@drawable/chat_bg_send"-->
+
 
 </LinearLayout>
