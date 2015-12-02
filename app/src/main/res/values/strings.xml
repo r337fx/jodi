@@ -11,6 +11,11 @@
     <string name="title_activity_edit_profile">Edit Profile</string>
     <string name="facebook_app_id">926407684074235</string>
 
+    <string name="charge">Untuk dapat mengetahui tingkat kecocokan, mengirimkan pesan dan profil lebih detail dari setiap pasangan anda akan dikenakan biaya berlangganan berikut :</string>
+    <string name="chargeOpsi1"> 2 Mingguan Rp.5500/2 minggu.</string>
+    <string name="chargeOpsi2">	Mingguan Rp.3300/minggu.</string>
+    <string name="chargeRemainder">*Paket Belangganan akan secara otomatis diperpanjang setiap bulannya atau setiap minggunya sesuai dengan paket yang anda pilih,</string>
+
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
     <string-array name="tb">
         <item>100</item>
@@ -78,5 +83,6 @@
 
     <string name="lorem_ipusm">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent turpis erat, tristique at auctor non, fermentum auctor tellus. Ut nisi elit, luctus sit amet lectus egestas, trices congue lacus. Praesent ut ornare lectus. Suspen tum consequat viverra.</string>
     <string name="title_activity_chat">Chat</string>
+    <string name="title_activity_subscribe">Subscribe</string>
 
 </resources>

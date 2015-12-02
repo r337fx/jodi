@@ -13,6 +13,7 @@ import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,18 +23,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
 import com.facebook.FacebookSdk;
 
+import org.json.JSONObject;
+import org.json.JSONException;
 import java.util.HashMap;
+import java.util.Map;
 
+import makasa.dapurkonten.jodohideal.app.AppConfig;
 import makasa.dapurkonten.jodohideal.app.SQLiteController;
 
 public class MainActivity extends AppCompatActivity
@@ -44,7 +54,7 @@ public class MainActivity extends AppCompatActivity
     sessionmanager session;
     private SQLiteController db;
     TextView txtNama, txtTinggi, txtLokasi,txtHoroskop, txtPekerjaan, txtAgama, txtTentang, txtDrawerNama,txtDrawerEmail;
-
+    private static String INI = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +139,58 @@ public class MainActivity extends AppCompatActivity
         }
     }**/
 
+    /**
+    public void listKecocokan(View view){
+        HashMap<String, String> profile = db.getUserDetails();
+        final String id = profile.get("id");
+
+        StringRequest reqKecocokan = new StringRequest(Request.Method.POST, AppConfig.urlAPI,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String respon) {
+                        Log.d(INI, respon.toString());
+
+                        try {
+                            JSONObject jsonResponse = new JSONObject(respon);
+
+                            String kcStatus = jsonResponse.getString("status");
+
+                            if (kcStatus.equals("success")) {
+                                JSONObject dataUser = jsonResponse.getJSONObject("data");
+                                String pasanganID = dataUser.getString("user_id"),
+                                        pasanganNamaDepan = dataUser.getString("first_name"),
+                                        pasanganNamaBelakang = dataUser.getString("last_name"),
+                                        pasanganKecocokan = dataUser.getString("kecocokan"),
+                                        pasanganKetidadakcocokan = dataUser.getString("ketidakcocokan"),
+                                        jodiBirthday = dataUser.getString("birth_date");
+                                Log.d(INI, respon.toString());
+                            } else {
+                                //some code here
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MainActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                }
+        ){
+            @Override
+            //kirim parameter ke api
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("jodiUserID",id);
+                params.put("jodiRandomPasangan", "");
+                return params;
+            }
+
+        };
+    }
+    **/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
