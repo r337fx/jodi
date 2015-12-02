@@ -26,4 +26,11 @@
     <color name="theme_blue">#ff41b2ec</color>
     <color name="red_light">#ffe74c3c</color>
     <color name="blue_sky">#ff33b5e5</color>
+    <color name="listProfil">#666666</color>
+    <color name="list_divider">#d9d9d9</color>
+    <color name="list_row_start_color">#ffffff</color>
+    <color name="list_row_end_color">#ffffff</color>
+    <color name="list_row_hover_start_color">#ebeef0</color>
+    <color name="list_row_hover_end_color">#ebeef0</color>
+
 </resources>

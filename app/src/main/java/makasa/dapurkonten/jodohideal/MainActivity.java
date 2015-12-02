@@ -24,12 +24,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -38,13 +41,20 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.facebook.FacebookSdk;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONException;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import makasa.dapurkonten.jodohideal.adapter.ListPartnerAdapter;
 import makasa.dapurkonten.jodohideal.app.AppConfig;
+import makasa.dapurkonten.jodohideal.app.AppController;
 import makasa.dapurkonten.jodohideal.app.SQLiteController;
+import makasa.dapurkonten.jodohideal.object.Partner;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -55,6 +65,9 @@ public class MainActivity extends AppCompatActivity
     private SQLiteController db;
     TextView txtNama, txtTinggi, txtLokasi,txtHoroskop, txtPekerjaan, txtAgama, txtTentang, txtDrawerNama,txtDrawerEmail;
     private static String INI = MainActivity.class.getSimpleName();
+    private List<Partner> partnerList = new ArrayList<Partner>();
+    private ListView listView;
+    private ListPartnerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,7 +139,55 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        /**
+        //ambil data dari API
+        // lanjut di update besok
+
+        JsonArrayRequest movieReq = new JsonArrayRequest(AppConfig.urlAPI,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d(INI, response.toString());
+
+                        // Parsing json
+                        for (int i = 0; i < response.length(); i++) {
+                            try {
+
+                                JSONObject obj = response.getJSONObject(i);
+                                Partner partner = new Partner();
+                                partner.setFullName(obj.getString("fname"), obj.getString("lname"));
+                                partner.setUrlFoto(obj.getString("image"));
+                                partner.setKecocokan(obj.getInt("match"));
+                                partner.setKetidakcocokan(obj.getInt("not_match"));
+
+
+                                // adding movie to movies array
+                                partnerList.add(partner);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                        // notifying list adapter about data changes
+                        // so that it renders the list view with updated data
+                        adapter.notifyDataSetChanged();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(INI, "Error: " + error.getMessage());
+
+            }
+        });
+
+        // Adding request to request queue
+
+        AppController.getInstance().addToRequestQueue(movieReq);
+        **/
     }
+
 
 
     /**@Override

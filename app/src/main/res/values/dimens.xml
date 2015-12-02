@@ -29,5 +29,9 @@
     <dimen name="txt_20sp">20.0sp</dimen>
     <dimen name="txt_25sp">25.0sp</dimen>
     <dimen name="divider">0.75dip</dimen>
+
+    <dimen name="listNama">17dp</dimen>
+    <dimen name="listPersen">15dip</dimen>
+    <dimen name="listProfil">13dip</dimen>
 </resources>
 
