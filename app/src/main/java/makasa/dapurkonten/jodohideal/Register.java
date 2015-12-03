@@ -29,11 +29,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import makasa.dapurkonten.jodohideal.app.SQLiteController;
 
 public class Register extends AppCompatActivity {
 
@@ -43,6 +46,7 @@ public class Register extends AppCompatActivity {
     private RadioButton rbGender;
     private Button btnRegister,inputBirthDay;
     private String urlApi ="http://jodi.licious.id/api/";
+    private SQLiteController db;
     sessionmanager session;
 
     @Override
@@ -51,6 +55,7 @@ public class Register extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        db = new SQLiteController(getApplicationContext());
         session = new sessionmanager(getApplicationContext());
         inputFirstName = (EditText)findViewById(R.id.firstName);
         inputLastName = (EditText)findViewById(R.id.lastName);
@@ -97,6 +102,15 @@ public class Register extends AppCompatActivity {
                                     String  jodiStatus = jsonResponse.getString("status");
 
                                     if(jodiStatus.equals("success")) {
+                                        JSONArray multiQuestions = jsonResponse.getJSONArray("pertanyaan");
+                                        for(int i=0;i<multiQuestions.length();i++){
+                                            JSONObject jodiQuestions = multiQuestions.getJSONObject(i);
+                                            String jodiQuestionId= jodiQuestions.getString("question_id"),
+                                                    jodiQuestion= jodiQuestions.getString("question"),
+                                                    jodiOps1= jodiQuestions.getString("answer_ops1"),
+                                                    jodiOps2= jodiQuestions.getString("answer_ops2");
+                                            db.addQuestion(jodiQuestionId,jodiQuestion,jodiOps1,jodiOps2);
+                                        }
                                         Toast.makeText(Register.this,jodiStatus,Toast.LENGTH_LONG).show();
                                         //session.buatSesiLogin(inputEmail, inputFirstName, inputLastName, rgSex, inputBirthDay);
                                         Intent i = new Intent(getApplicationContext(),EditProfile.class);

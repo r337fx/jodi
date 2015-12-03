@@ -15,16 +15,16 @@ import android.widget.TextView;
 
 public class questionsActivity extends FragmentActivity {
     static final int NUM_ITEMS = 9;
-    PlanetFragmentPagerAdapter planetFragmentPagerAdapter;
+    QuestionFragmentPagerAdapter questionFragmentPagerAdapter;
     ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
-        planetFragmentPagerAdapter = new PlanetFragmentPagerAdapter(getSupportFragmentManager());
+        questionFragmentPagerAdapter = new QuestionFragmentPagerAdapter(getSupportFragmentManager());
         viewPager = (ViewPager)findViewById(R.id.pager);
-        viewPager.setAdapter(planetFragmentPagerAdapter);
+        viewPager.setAdapter(questionFragmentPagerAdapter);
         Button button = (Button)findViewById(R.id.goto_previous);
         button.setOnClickListener(btnListener);
         button = (Button)findViewById(R.id.goto_next);
@@ -44,8 +44,8 @@ public class questionsActivity extends FragmentActivity {
         }
     };
 
-    public static class PlanetFragmentPagerAdapter extends FragmentPagerAdapter {
-        public PlanetFragmentPagerAdapter(FragmentManager fm) {
+    public static class QuestionFragmentPagerAdapter extends FragmentPagerAdapter {
+        public QuestionFragmentPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 

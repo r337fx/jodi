@@ -25,6 +25,7 @@ public class SQLiteController extends SQLiteOpenHelper {
 
     // tabel untuk login dan value akan disimpan pada tabel ini
     private static final String TABLE_USER = "user";
+    private static final String TABLE_QUESTION = "question";
 
     // nama kolom
     private static final String COL_ID = "id";
@@ -63,7 +64,15 @@ public class SQLiteController extends SQLiteOpenHelper {
                 + COL_JOB + " TEXT,"
                 + COL_USER_DETAIL + " TEXT" +
                 ")";
+        String CREATE_QUESTION_TABLE = "CREATE TABLE " + TABLE_QUESTION +"(" +
+                "id INTEGER PRIMARY KEY," +
+                "question_id INTEGER," +
+                "question TEXT," +
+                "answer_ops1 TEXT," +
+                "answer_ops2 TEXT," +
+                "user_answer INTEGER)";
         db.execSQL(CREATE_LOGIN_TABLE);
+        db.execSQL(CREATE_QUESTION_TABLE);
 
         Log.d(INI, "Database tables created");
     }
@@ -73,6 +82,7 @@ public class SQLiteController extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop table yg lama
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_QUESTION );
 
         // buat kembali tabel
         onCreate(db);
@@ -109,6 +119,17 @@ public class SQLiteController extends SQLiteOpenHelper {
         db.close();
 
         Log.d(INI, "New user inserted into sqlite: " + uid);
+    }
+    //ini table question
+    public void addQuestion(String question_id,String question,String answer_ops1,String answer_ops2){
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues questions=new ContentValues();
+        questions.put("question_id",question_id);
+        questions.put("question",question);
+        questions.put("answer_ops1",answer_ops1);
+        questions.put("answer_ops2",answer_ops2);
+        long uidQuestion=db.insert(TABLE_QUESTION,null,questions);
+        Log.d(INI,"new question inserted into sqlite: "+uidQuestion);
     }
 
     /**
@@ -148,6 +169,30 @@ public class SQLiteController extends SQLiteOpenHelper {
 
         return user;
     }
+    public HashMap<String, String> getQuestion() {
+        HashMap<String, String> questions = new HashMap<String, String>();
+        String selectQuery = "SELECT  * FROM " + TABLE_QUESTION;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // arahkan kursor si sqlite ke baris pertama table
+        // ibarat fetch array mysql
+        cursor.moveToFirst();
+        if (cursor.getCount() > 0) {
+            questions.put("id", cursor.getString(0));
+            questions.put("question_id", cursor.getString(1));
+            questions.put("question", cursor.getString(2));
+            questions.put("answer_ops1", cursor.getString(3));
+            questions.put("answer_ops2", cursor.getString(4));
+        }
+        cursor.close();
+        db.close();
+        // return user
+        Log.d(INI, "Fetching user from Sqlite: " + questions.toString());
+
+        return questions;
+    }
 
     /**
      * buat ulang db
@@ -161,6 +206,14 @@ public class SQLiteController extends SQLiteOpenHelper {
         db.close();
 
         Log.d(INI, "Deleted all user info from sqlite");
+    }
+    public void deleteQuestions() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        // Delete All Rows
+        db.delete(TABLE_QUESTION, null, null);
+        db.close();
+
+        Log.d(INI, "Deleted all questions info from sqlite");
     }
 
 }

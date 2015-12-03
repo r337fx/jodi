@@ -4,6 +4,10 @@ package makasa.dapurkonten.jodohideal;
  * Created by abay on 02/12/15.
  */
 
+        import android.database.Cursor;
+        import android.database.sqlite.SQLiteDatabase;
+        import android.util.Log;
+
         import java.util.Collections;
         import java.util.HashMap;
         import java.util.Map;
@@ -34,3 +38,27 @@ public class questions {
         PLANET_DETAIL = Collections.unmodifiableMap(planets);
     }
 }
+    public HashMap<String, String> getQuestion() {
+        HashMap<String, String> questions = new HashMap<String, String>();
+        String selectQuery = "SELECT  * FROM question";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // arahkan kursor si sqlite ke baris pertama table
+        // ibarat fetch array mysql
+        cursor.moveToFirst();
+        if (cursor.getCount() > 0) {
+            questions.put("id", cursor.getString(0));
+            questions.put("question_id", cursor.getString(1));
+            questions.put("question", cursor.getString(2));
+            questions.put("answer_ops1", cursor.getString(3));
+            questions.put("answer_ops2", cursor.getString(4));
+        }
+        cursor.close();
+        db.close();
+        // return user
+        Log.d(INI, "Fetching user from Sqlite: " + questions.toString());
+
+        return questions;
+    }
