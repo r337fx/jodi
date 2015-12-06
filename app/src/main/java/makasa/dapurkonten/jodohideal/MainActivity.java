@@ -287,7 +287,8 @@ public class MainActivity extends AppCompatActivity
 
         }
         else if (id == R.id.nav_pasangan) {
-
+            Intent psg = new Intent(getApplicationContext(), CariPasangan.class);
+            startActivity(psg);
         }
         else if (id == R.id.nav_chat){
             Intent cht = new Intent(getApplicationContext(), Chat.class);

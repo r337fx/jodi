@@ -34,6 +34,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -204,6 +205,28 @@ public class Login extends AppCompatActivity {
                                                 jodiGender = dataUser.getString("gender"),
                                                 jodiBirthday = dataUser.getString("birth_date"),
                                                 jodiIsFillProfile = dataUser.getString("is_fillprofile");
+
+                                       JSONArray jodiPartner = jsonResponse.getJSONArray("partner");
+
+                                        for (int i=0; i<jodiPartner.length(); i++){
+                                            JSONObject partner = (JSONObject) jodiPartner.get(i);
+                                            String partner_id = partner.getString("partner_id"),
+                                                    partner_fname = partner.getString("fname"),
+                                                    partner_lname = partner.getString("lname"),
+                                                    partner_image = partner.getString("image"),
+                                                    partner_gender = partner.getString("gender"),
+                                                    partner_race = partner.getString("race"),
+                                                    partner_religion = partner.getString("religion");
+                                            int partner_match = partner.getInt("match"),
+                                                    partner_notmatch = partner.getInt("not_match"),
+                                                    partner_age = partner.getInt("age");
+
+                                            db.addPartner(partner_id, partner_fname, partner_lname, partner_match,
+                                                    partner_notmatch, partner_image, partner_age, partner_gender, partner_race, partner_religion);
+
+
+                                        }
+
                                         session.buatSesiLogin(jodiUserID, jodiEmail, jodiFirstName,
                                                 jodiLastName, jodiGender, jodiBirthday);
                                         if(jodiIsFillProfile.equals("0")){

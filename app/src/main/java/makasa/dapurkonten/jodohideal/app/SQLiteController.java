@@ -26,6 +26,7 @@ public class SQLiteController extends SQLiteOpenHelper {
     // tabel untuk login dan value akan disimpan pada tabel ini
     private static final String TABLE_USER = "user";
     private static final String TABLE_QUESTION = "question";
+    private static final String TABLE_PARTNER = "partner";
 
     // nama kolom
     private static final String COL_ID = "id";
@@ -64,6 +65,20 @@ public class SQLiteController extends SQLiteOpenHelper {
                 + COL_JOB + " TEXT,"
                 + COL_USER_DETAIL + " TEXT" +
                 ")";
+
+        String CREATE_PARTNER_TABLE = "CREATE TABLE " + TABLE_PARTNER + "(" +
+                "id INTEGER PRIMARY KEY, " +
+                "partner_fname TEXT, " +
+                "partner_lname TEXT, " +
+                "partner_match INTEGER, " +
+                "partner_notmatch INTEGER, " +
+                "partner_image TEXT, " +
+                "partner_age INTEGER, " +
+                "partner_gender TEXT, " +
+                "partner_race TEXT, " +
+                "partner_religion TEXT" +
+                ")";
+
         String CREATE_QUESTION_TABLE = "CREATE TABLE " + TABLE_QUESTION +"(" +
                 "id INTEGER PRIMARY KEY," +
                 "question_id INTEGER," +
@@ -71,17 +86,18 @@ public class SQLiteController extends SQLiteOpenHelper {
                 "answer_ops1 TEXT," +
                 "answer_ops2 TEXT," +
                 "user_answer INTEGER)";
+
         db.execSQL(CREATE_LOGIN_TABLE);
         db.execSQL(CREATE_QUESTION_TABLE);
-
-        Log.d(INI, "Database tables created");
+        db.execSQL(CREATE_PARTNER_TABLE);
+        Log.d(INI, "tables created");
     }
 
     // Upgrading database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop table yg lama
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
+        //db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
 
         // buat kembali tabel
         onCreate(db);
@@ -119,6 +135,31 @@ public class SQLiteController extends SQLiteOpenHelper {
 
         Log.d(INI, "New user inserted into sqlite: " + uid);
     }
+
+    public void addPartner(String id, String fname, String lname, int match, int not_match, String imageUrl,
+                           int age, String gender, String race, String religion){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        // key, value
+        values.put("id", id);
+        values.put("partner_fname", fname);
+        values.put("partner_lname", lname);
+        values.put("partner_match", match);
+        values.put("partner_notmatch", not_match);
+        values.put("partner_image", imageUrl);
+        values.put("partner_age", age);
+        values.put("partner_gender", gender);
+        values.put("partner_race", race);
+        values.put("partner_religion", religion);
+
+        // Insert
+        long uid = db.insert(TABLE_PARTNER, null, values);
+        db.close();
+
+        Log.d(INI, "New partner inserted into sqlite: " + uid);
+    }
+
     //ini table question
     public void addQuestion(String question_id,String question,String answer_ops1,String answer_ops2){
         SQLiteDatabase db=this.getWritableDatabase();
@@ -165,6 +206,36 @@ public class SQLiteController extends SQLiteOpenHelper {
         db.close();
         // return user
         Log.d(INI, "Fetching user from Sqlite: " + user.toString());
+
+        return user;
+    }
+
+    public HashMap<String, String> getPartnerDetails() {
+        HashMap<String, String> user = new HashMap<String, String>();
+        String selectQuery = "SELECT  * FROM " + TABLE_PARTNER;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // arahkan kursor si sqlite ke baris pertama table
+        // ibarat fetch array mysql
+        cursor.moveToFirst();
+        if (cursor.getCount() > 0) {
+            user.put("partner_id", cursor.getString(0));
+            user.put("partner_fname", cursor.getString(1));
+            user.put("partner_lname", cursor.getString(2));
+            user.put("partner_match", cursor.getString(3));
+            user.put("partner_notmatch", cursor.getString(4));
+            user.put("partner_image", cursor.getString(5));
+            user.put("partner_age", cursor.getString(6));
+            user.put("partner_gender", cursor.getString(7));
+            user.put("partner_race", cursor.getString(8));
+            user.put("partner_religion", cursor.getString(9));
+        }
+        cursor.close();
+        db.close();
+        // return user
+        Log.d(INI, "Fetching partner from Sqlite: " + user.toString());
 
         return user;
     }
