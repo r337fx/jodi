@@ -82,7 +82,6 @@ public class SQLiteController extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop table yg lama
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_QUESTION );
 
         // buat kembali tabel
         onCreate(db);
@@ -125,9 +124,9 @@ public class SQLiteController extends SQLiteOpenHelper {
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues questions=new ContentValues();
         questions.put("question_id",question_id);
-        questions.put("question",question);
-        questions.put("answer_ops1",answer_ops1);
-        questions.put("answer_ops2",answer_ops2);
+        questions.put("question", question);
+        questions.put("answer_ops1", answer_ops1);
+        questions.put("answer_ops2", answer_ops2);
         long uidQuestion=db.insert(TABLE_QUESTION,null,questions);
         Log.d(INI,"new question inserted into sqlite: "+uidQuestion);
     }
@@ -169,15 +168,13 @@ public class SQLiteController extends SQLiteOpenHelper {
 
         return user;
     }
-    public HashMap<String, String> getQuestion() {
+
+    public HashMap<String,String> getIdQuestion(int id){
         HashMap<String, String> questions = new HashMap<String, String>();
-        String selectQuery = "SELECT  * FROM " + TABLE_QUESTION;
+        String selectQuery = "SELECT  * FROM " + TABLE_QUESTION +" where id = ?";
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        // arahkan kursor si sqlite ke baris pertama table
-        // ibarat fetch array mysql
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(id)});
         cursor.moveToFirst();
         if (cursor.getCount() > 0) {
             questions.put("id", cursor.getString(0));
@@ -188,11 +185,9 @@ public class SQLiteController extends SQLiteOpenHelper {
         }
         cursor.close();
         db.close();
-        // return user
-        Log.d(INI, "Fetching user from Sqlite: " + questions.toString());
-
         return questions;
     }
+
 
     /**
      * buat ulang db

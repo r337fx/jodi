@@ -53,7 +53,21 @@
             android:maxWidth="@dimen/pad_200dp"
             android:text="text text texttext text text texttext txet text txetxtxtxtxtxtxtxtxtx texttext "
             android:background="@drawable/chat_bg_send" />
-
+        <TextView
+            android:textSize="@dimen/txt_14sp"
+            android:textColor="@color/gray_dk"
+            android:gravity="center_vertical"
+            android:layout_gravity="right"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="@dimen/pad_10dp"
+            android:paddingTop="@dimen/pad_1dp"
+            android:paddingRight="@dimen/pad_15dp"
+            android:paddingBottom="@dimen/pad_5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="@dimen/pad_200dp"
+            android:text="text text texttext text text texttext txet text txetxtxtxtxtxtxtxtxtx texttext "
+            android:background="@drawable/chat_bg_send" />
 
 
         </LinearLayout>
