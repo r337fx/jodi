@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SQLiteController extends SQLiteOpenHelper {
@@ -97,8 +98,8 @@ public class SQLiteController extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop table yg lama
-        //db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
-
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
+        
         // buat kembali tabel
         onCreate(db);
     }
@@ -280,6 +281,38 @@ public class SQLiteController extends SQLiteOpenHelper {
         db.close();
 
         Log.d(INI, "Deleted all questions info from sqlite");
+    }
+
+    public ArrayList<HashMap<String, String>> getAllPartner() {
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        // deklarasikan sebuah arraylist yang bisa menampung hashmap
+        ArrayList<HashMap<String, String>> arrayListPartner = new ArrayList<HashMap<String, String>>();
+
+        Cursor cursor = database.rawQuery("SELECT * FROM partner", null);
+
+        // kursor langsung diarkan ke posisi paling awal data pada tabel partner
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> hashMapPartner = new HashMap<String, String>();
+
+                hashMapPartner.put("partner_id", cursor.getString(0));
+                hashMapPartner.put("partner_fname", cursor.getString(1));
+                hashMapPartner.put("partner_lname", cursor.getString(2));
+                hashMapPartner.put("partner_match", cursor.getString(3));
+                hashMapPartner.put("partner_notmatch", cursor.getString(4));
+                hashMapPartner.put("partner_image", cursor.getString(5));
+                hashMapPartner.put("partner_age", cursor.getString(6));
+                hashMapPartner.put("partner_gender", cursor.getString(7));
+                hashMapPartner.put("partner_race", cursor.getString(8));
+                hashMapPartner.put("partner_religion", cursor.getString(9));
+
+                arrayListPartner.add(hashMapPartner);
+
+            } while (cursor.moveToNext());
+        }
+
+        return arrayListPartner;
     }
 
 }
