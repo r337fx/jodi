@@ -1,11 +1,15 @@
 package makasa.dapurkonten.jodohideal;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,76 +17,59 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class questionsActivity extends FragmentActivity {
-    static final int NUM_ITEMS = 9;
-    QuestionFragmentPagerAdapter questionFragmentPagerAdapter;
-    ViewPager viewPager;
+import java.util.HashMap;
 
+import makasa.dapurkonten.jodohideal.app.SQLiteController;
+
+public class questionsActivity extends AppCompatActivity{
+    private SQLiteController db;
+    TextView pertanyaans;
+    int idpertanyaan;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        idpertanyaan = 1;
         setContentView(R.layout.activity_question);
-        questionFragmentPagerAdapter = new QuestionFragmentPagerAdapter(getSupportFragmentManager());
-        viewPager = (ViewPager)findViewById(R.id.pager);
-        viewPager.setAdapter(questionFragmentPagerAdapter);
-        Button button = (Button)findViewById(R.id.goto_previous);
-        button.setOnClickListener(btnListener);
-        button = (Button)findViewById(R.id.goto_next);
-        button.setOnClickListener(btnListener);
-        }
+        pertanyaans = (TextView)findViewById(R.id.questiont);
+        db = new SQLiteController(getApplicationContext());
+        HashMap<String,String> tenQuestion = db.getIdQuestion(idpertanyaan);
+        String id=tenQuestion.get("id"),
+                question_id=tenQuestion.get("question_id"),
+                question=tenQuestion.get("question"),
+                answer_ops1=tenQuestion.get("answer_ops1"),
+                answer_ops2=tenQuestion.get("answer_ops2");
+        pertanyaans.setText(question);
+    }
 
     private View.OnClickListener btnListener = new View.OnClickListener() {
         public void onClick(View v) {
-            switch(v.getId()) {
+            switch (v.getId()) {
                 case R.id.goto_previous:
-                    viewPager.setCurrentItem(viewPager.getCurrentItem()-1);
+                    if(idpertanyaan>0) {
+                        idpertanyaan--;
+                        HashMap<String,String> tenQuestion = db.getIdQuestion(idpertanyaan);
+                        String id=tenQuestion.get("id"),
+                                question_id=tenQuestion.get("question_id"),
+                                question=tenQuestion.get("question"),
+                                answer_ops1=tenQuestion.get("answer_ops1"),
+                                answer_ops2=tenQuestion.get("answer_ops2");
+                        pertanyaans.setText(question);
+                    }
                     break;
                 case R.id.goto_next:
-                    viewPager.setCurrentItem(viewPager.getCurrentItem()+1);
+                   if(idpertanyaan<10) {
+                        idpertanyaan++;
+                        HashMap<String,String> tenQuestion = db.getIdQuestion(idpertanyaan);
+                        String id=tenQuestion.get("id"),
+                                question_id=tenQuestion.get("question_id"),
+                                question=tenQuestion.get("question"),
+                                answer_ops1=tenQuestion.get("answer_ops1"),
+                                answer_ops2=tenQuestion.get("answer_ops2");
+                        pertanyaans.setText(question);
+                    }
                     break;
             }
         }
     };
 
-    public static class QuestionFragmentPagerAdapter extends FragmentPagerAdapter {
-        public QuestionFragmentPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public int getCount() {
-            return NUM_ITEMS;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            SwipeFragment fragment = new SwipeFragment();
-            return SwipeFragment.newInstance(position);
-        }
-    }
-
-    public static class SwipeFragment extends Fragment {
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View swipeView = inflater.inflate(R.layout.swipe_fragment, container, false);
-            TextView tv = (TextView)swipeView.findViewById(R.id.text);
-            ImageView img = (ImageView)swipeView.findViewById(R.id.imageView);
-            Bundle args = getArguments();
-            int position = args.getInt("position");
-            String planet = questions.PLANETS[position];
-            int imgResId = getResources().getIdentifier(planet, "drawable", "makasa.dapurkonten.jodohideal");
-            img.setImageResource(imgResId);
-            tv.setText(questions.PLANET_DETAIL.get(planet)+" - Wikipedia.");
-            return swipeView;
-        }
-
-        static SwipeFragment newInstance(int position) {
-            SwipeFragment swipeFragment = new SwipeFragment();
-            Bundle args = new Bundle();
-            args.putInt("position", position);
-            swipeFragment.setArguments(args);
-            return swipeFragment;
-        }
-    }
 }
