@@ -7,14 +7,15 @@ package makasa.dapurkonten.jodohideal.object;
 
 public class Partner {
     private String firstName, lastName, fullName, gender, suku, agama, urlFoto;
-    private int kecocokan, ketidakcocokan, umur;
+    private int pID, kecocokan, ketidakcocokan, umur;
 
     public Partner(){
 
     }
 
-    public Partner(String firstName, String lastName, String gender,
+    public Partner(int pID,String firstName, String lastName, String gender,
                    String suku, String agama, String urlFoto, int kecocokan, int ketidakcocokan, int umur){
+        this.pID = pID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -26,6 +27,14 @@ public class Partner {
         this.umur = umur;
     }
 
+    public int getpID(){
+        return pID;
+    }
+
+    public void setpID(int pID){
+        this.pID = pID;
+    }
+
     public String getFullName(){
         String fullName = firstName + " " + lastName;
         return fullName;
@@ -34,6 +43,7 @@ public class Partner {
     public void setFullName(String firstName, String lastName){
         this.fullName = firstName + " " + lastName;
     }
+
 
     public String getGender(){
         return gender;

@@ -183,59 +183,6 @@ public class MainActivity extends AppCompatActivity
         }
     }**/
 
-    /**
-    public void listKecocokan(View view){
-        HashMap<String, String> profile = db.getUserDetails();
-        final String id = profile.get("id");
-
-        StringRequest reqKecocokan = new StringRequest(Request.Method.POST, AppConfig.urlAPI,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String respon) {
-                        Log.d(INI, respon.toString());
-
-                        try {
-                            JSONObject jsonResponse = new JSONObject(respon);
-
-                            String kcStatus = jsonResponse.getString("status");
-
-                            if (kcStatus.equals("success")) {
-                                JSONObject dataUser = jsonResponse.getJSONObject("data");
-                                String pasanganID = dataUser.getString("user_id"),
-                                        pasanganNamaDepan = dataUser.getString("first_name"),
-                                        pasanganNamaBelakang = dataUser.getString("last_name"),
-                                        pasanganKecocokan = dataUser.getString("kecocokan"),
-                                        pasanganKetidadakcocokan = dataUser.getString("ketidakcocokan"),
-                                        jodiBirthday = dataUser.getString("birth_date");
-                                Log.d(INI, respon.toString());
-                            } else {
-                                //some code here
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this,error.toString(),Toast.LENGTH_LONG).show();
-                    }
-                }
-        ){
-            @Override
-            //kirim parameter ke api
-            protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("jodiUserID",id);
-                params.put("jodiRandomPasangan", "");
-                return params;
-            }
-
-        };
-    }
-    **/
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -268,7 +215,8 @@ public class MainActivity extends AppCompatActivity
 
         }
         else if (id == R.id.nav_profile) {
-
+            Intent prfl = new Intent(this, Profile.class);
+            startActivity(prfl);
         }
         else if (id == R.id.nav_pasangan) {
             Intent psg = new Intent(getApplicationContext(), CariPasangan.class);

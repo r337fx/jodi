@@ -1,5 +1,6 @@
 package makasa.dapurkonten.jodohideal;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,8 +14,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import makasa.dapurkonten.jodohideal.app.SQLiteController;
+
 public class Profile extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    sessionmanager session;
+    private SQLiteController db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,18 +86,24 @@ public class Profile extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_home) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        }
+        else if (id == R.id.nav_profile) {
+            Intent prfl = new Intent(this, Profile.class);
+            startActivity(prfl);
+        }
+        else if (id == R.id.nav_pasangan) {
+            Intent psg = new Intent(getApplicationContext(), CariPasangan.class);
+            startActivity(psg);
+        }
+        else if (id == R.id.nav_chat){
+            Intent cht = new Intent(getApplicationContext(), Chat.class);
+            startActivity(cht);
+        }
+        else if (id == R.id.nav_logout) {
+            db.deleteUsers();
+            session.logoutUser();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
