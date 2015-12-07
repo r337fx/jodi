@@ -156,5 +156,52 @@
                 android:divider="@color/gray"
                 android:dividerHeight="1dp"/>
         </LinearLayout>
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/list_row_selector"
+            android:padding="8dp" >
+
+            <com.android.volley.toolbox.NetworkImageView
+                android:id="@+id/thumbnailFoto"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/sample_pic1"/>
+
+            <TextView
+                android:id="@+id/txtCocokNama"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/thumbnailFoto"
+                android:layout_toRightOf="@+id/thumbnailFoto"
+                android:textSize="@dimen/listNama"
+                android:textStyle="bold"
+                android:text="John Doe"/>
+
+            <TextView
+                android:id="@+id/txtCocokPersen"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtCocokNama"
+                android:layout_marginTop="1dip"
+                android:layout_toRightOf="@+id/thumbnailFoto"
+                android:textSize="@dimen/listPersen"
+                android:text="38% Kecocokan | 62% Ketidakcocokan"/>
+
+            <TextView
+                android:id="@+id/txtCocokDetail"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtCocokPersen"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/thumbnailFoto"
+                android:textColor="@color/listProfil"
+                android:textSize="@dimen/listProfil"
+                android:text="23 Tahun, Cowok, Jawa, Islam"/>
+
+
+        </RelativeLayout>
     </LinearLayout>
 </ScrollView>
