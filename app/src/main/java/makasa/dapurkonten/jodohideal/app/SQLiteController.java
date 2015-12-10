@@ -28,6 +28,7 @@ public class SQLiteController extends SQLiteOpenHelper {
     private static final String TABLE_USER = "user";
     private static final String TABLE_QUESTION = "question";
     private static final String TABLE_PARTNER = "partner";
+    private static final String TABLE_ANSWER = "answer";
 
     // nama kolom
     private static final String COL_ID = "id";
@@ -88,9 +89,27 @@ public class SQLiteController extends SQLiteOpenHelper {
                 "answer_ops2 TEXT," +
                 "user_answer INTEGER)";
 
+        String CREATE_ANSWER_TABLE = "CREATE TABLE " + TABLE_ANSWER + "(" +
+                "id INTEGER PRIMARY KEY, " +
+                "answer_1 INTEGER, " +
+                "answer_2 INTEGER, " +
+                "answer_3 INTEGER, " +
+                "answer_4 INTEGER, " +
+                "answer_5 INTEGER, " +
+                "answer_6 INTEGER, " +
+                "answer_7 INTEGER, " +
+                "answer_8 INTEGER, " +
+                "answer_9 INTEGER, " +
+                "answer_10 INTEGER)";
+
+        String initAnswer = "INSERT INTO " + TABLE_ANSWER + "(id) values (1)";
+
         db.execSQL(CREATE_LOGIN_TABLE);
         db.execSQL(CREATE_QUESTION_TABLE);
         db.execSQL(CREATE_PARTNER_TABLE);
+        db.execSQL(CREATE_ANSWER_TABLE);
+        db.execSQL(initAnswer);
+
         Log.d(INI, "tables created");
     }
 
@@ -99,6 +118,9 @@ public class SQLiteController extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop table yg lama
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
+        db.execSQL("DROP TAble IF EXISTS " + TABLE_PARTNER);
+        db.execSQL("DROP TAble IF EXISTS " + TABLE_QUESTION);
+        db.execSQL("DROP TAble IF EXISTS " + TABLE_ANSWER);
         
         // buat kembali tabel
         onCreate(db);
@@ -135,6 +157,14 @@ public class SQLiteController extends SQLiteOpenHelper {
         db.close();
 
         Log.d(INI, "New user inserted into sqlite: " + uid);
+    }
+
+    public void saveAnswer(int idKolom, int jawaban){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String queryUpdate = "UPDATE " + TABLE_ANSWER + " " +
+                                "SET answer_" + idKolom + " = " + jawaban + " " +
+                                "where id = 1";
+        db.execSQL(queryUpdate);
     }
 
     public void addPartner(String id, String fname, String lname, int match, int not_match, String imageUrl,
