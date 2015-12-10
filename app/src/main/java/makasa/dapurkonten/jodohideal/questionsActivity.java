@@ -69,7 +69,6 @@ public class questionsActivity extends AppCompatActivity{
              * tested works
              */
             int selectedID = groupQuestion.indexOfChild(findViewById(groupQuestion.getCheckedRadioButtonId()));
-            db.saveAnswer(idpertanyaan, selectedID);
 
             question1.setChecked(false);
             question2.setChecked(false);

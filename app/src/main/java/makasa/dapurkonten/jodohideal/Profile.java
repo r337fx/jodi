@@ -13,6 +13,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
+import java.util.HashMap;
 
 import makasa.dapurkonten.jodohideal.app.SQLiteController;
 
@@ -21,11 +26,37 @@ public class Profile extends AppCompatActivity
 
     sessionmanager session;
     private SQLiteController db;
-
+    TextView nama,umur,tb,agama,lokasi,horoskop,jk;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        nama=(TextView)findViewById(R.id.viewProfileNama);
+        umur=(TextView)findViewById(R.id.viewProfileUmur);
+        tb=(TextView)findViewById(R.id.viewProfileTinggi);
+        agama=(TextView)findViewById(R.id.viewProfileAgama);
+        lokasi=(TextView)findViewById(R.id.viewProfileLokasi);
+        horoskop=(TextView)findViewById(R.id.viewProfileHoroskop);
+        jk=(TextView)findViewById(R.id.viewProfileGender);
+
+        db = new SQLiteController(getApplicationContext());
+        HashMap<String,String> user=db.getUserDetails();
+        String age=user.get("age"),
+                gender=user.get("gender"),
+                fname=user.get("first_name"),
+                lname=user.get("last_name"),
+                height=user.get("height"),
+                location=user.get("location"),
+                horoscope=user.get("horoscope"),
+                religion=user.get("religion");
+        nama.setText(fname + ' ' + lname);
+        umur.setText(age);
+        tb.setText(height);
+        agama.setText(religion);
+        lokasi.setText(location);
+        horoskop.setText(horoscope);
+        jk.setText(gender);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
