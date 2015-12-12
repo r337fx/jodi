@@ -12,11 +12,25 @@
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/idQuestiont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="/10"
+            android:layout_toRightOf="@id/idQuestiont"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/questiont"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/idQuestiont"
             android:textColor="@color/black"
             android:layout_marginTop="20dp"/>
 
@@ -25,22 +39,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/questiont"
-            android:layout_centerHorizontal="true"
             >
             <RadioButton
                 android:id="@+id/question1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:gravity="center"
-                android:layout_gravity="center"/>
+                android:textColor="@color/black"/>
             <RadioButton
                 android:id="@+id/question2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:gravity="center"
-                android:layout_gravity="center"/>
+                android:textColor="@color/black"/>
         </RadioGroup>
 
 
@@ -48,7 +57,7 @@
             android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Previous"
+            android:text="Back"
             android:onClick="previous"
             android:layout_alignParentBottom="true"
             android:background="@null"
