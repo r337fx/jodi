@@ -51,6 +51,11 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"/>
         </RadioGroup>
+        <TextView
+            android:id="@+id/error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"/>
 
 
         <Button android:id="@+id/goto_previous"

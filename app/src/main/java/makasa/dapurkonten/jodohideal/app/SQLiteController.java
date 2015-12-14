@@ -263,6 +263,13 @@ public class SQLiteController extends SQLiteOpenHelper {
         db.close();
         return questions;
     }
+    public void updateQuestion(int id,int user_answer){
+        SQLiteDatabase db = this.getReadableDatabase();
+        ContentValues c=new ContentValues();
+        c.put("user_answer",user_answer);
+        db.update(TABLE_QUESTION,c,"id="+id,null);
+        db.close();
+    }
 
 
     /**
