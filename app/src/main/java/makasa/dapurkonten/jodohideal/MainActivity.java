@@ -3,6 +3,8 @@ package makasa.dapurkonten.jodohideal;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,6 +14,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -37,11 +41,17 @@ public class MainActivity extends AppCompatActivity
     private ListView listView;
     private ListPartnerAdapter adapter;
     ImageButton btnTglChat;
+    ArrayList<String> dataArray_right=new ArrayList<String>();
+    ArrayList<Object> objectArray_right=new ArrayList<Object>();
+    ChatItemAdapter adapterChat;
+    ListView customListView_chat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        customListView_chat=(ListView)findViewById(R.id.right_nav);
 
         db = new SQLiteController(getApplicationContext());
 
@@ -108,7 +118,6 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        final NavigationView rightNav = (NavigationView)findViewById(R.id.right_nav);
         navigationView.setNavigationItemSelectedListener(this);
 
         btnTglChat = (ImageButton)findViewById(R.id.tglChat);
@@ -116,10 +125,10 @@ public class MainActivity extends AppCompatActivity
         btnTglChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (drawer.isDrawerOpen(rightNav)){
-                    drawer.closeDrawer(rightNav);
+                if (drawer.isDrawerOpen(customListView_chat)){
+                    drawer.closeDrawer(customListView_chat);
                 }
-                drawer.openDrawer(rightNav);
+                drawer.openDrawer(customListView_chat);
             }
         });
 
@@ -146,9 +155,40 @@ public class MainActivity extends AppCompatActivity
 
             }
         } **/
+
+        IsiChat();
+        RefreshListChat();
     }
 
+    public void RefreshListChat() {
 
+
+
+        objectArray_right.clear();
+        for (int i = 0; i < dataArray_right.size(); i++) {
+            Object obj = new Object();
+            objectArray_right.add(obj);
+        }
+        Log.d("object array", "" + objectArray_right.size());
+        adapterChat = new ChatItemAdapter(objectArray_right, 1);
+        customListView_chat.setAdapter(adapterChat);
+
+    }
+
+    public void IsiChat()
+    {
+
+        dataArray_right.clear();
+
+
+        dataArray_right.add("Option 1");
+        dataArray_right.add("Option 2");
+        dataArray_right.add("Option 3");
+        dataArray_right.add("Option 4");
+        dataArray_right.add("Option 5");
+
+
+    }
 
     /**@Override
     public void onBackPressed() {
@@ -213,5 +253,73 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * Item Adapter untuk nampilkan daftar orang
+     * yang online
+     */
+    private class ChatItemAdapter extends ArrayAdapter<Object>
+    {
+        ViewHolder holder1;
 
+        public ChatItemAdapter(List<Object>items,int x) {
+            // TODO Auto-generated constructor stub
+            super(MainActivity.this, android.R.layout.simple_list_item_single_choice, items);
+        }
+
+        @Override
+        public String getItem(int position) {
+            // TODO Auto-generated method stub
+            return dataArray_right.get(position);
+        }
+
+        public int getItemInteger(int pos)
+        {
+            return pos;
+
+        }
+        @Override
+        public int getCount() {
+            // TODO Auto-generated method stub
+            return dataArray_right.size();
+        }
+
+        @Override
+        public long getItemId(int position) {
+            // TODO Auto-generated method stub
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            // TODO Auto-generated method stub
+
+            LayoutInflater inflator=getLayoutInflater();
+
+            convertView=inflator.inflate(R.layout.list_chat, null);
+
+
+
+            holder1=new ViewHolder();
+
+            holder1.text=(TextView)convertView.findViewById(R.id.txtListOnlie);
+
+
+            convertView.setTag(holder1);
+
+            String text=dataArray_right.get(position);
+            holder1.text.setText(dataArray_right.get(position));
+
+
+
+
+
+            return convertView;
+        }
+
+    }
+
+    private class ViewHolder {
+        TextView text,textcounter;
+
+    }
 }

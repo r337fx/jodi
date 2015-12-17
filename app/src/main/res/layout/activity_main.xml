@@ -18,14 +18,12 @@
         app:headerLayout="@layout/nav_header_main" app:menu="@menu/activity_main_drawer"
         app:itemTextColor="@color/white"
         />
-    <android.support.design.widget.NavigationView android:id="@+id/right_nav"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="right"
-        android:fitsSystemWindows="true"
-        android:background="#212121"
-        app:headerLayout="@layout/nav_header_main" app:menu="@menu/activity_main_drawer"
-        app:itemTextColor="@color/white"
-        />
 
+    <ListView
+        android:id="@+id/right_nav"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:divider="@android:color/transparent"
+        android:background="@color/navPrimary"/>
 </android.support.v4.widget.DrawerLayout>

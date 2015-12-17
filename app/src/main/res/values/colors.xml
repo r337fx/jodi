@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#d32f2f</color>
     <color name="colorAccent">#e91e63</color>
     <color name="white">#fff</color>
+    <color name="navPrimary">#212121</color>
     <color name="input_login">#222222</color>
     <color name="input_login_hint">#999999</color>
     <color name="facebook">#4862A3</color>
