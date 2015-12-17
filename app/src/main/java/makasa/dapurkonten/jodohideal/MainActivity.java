@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity
     private List<Partner> partnerList = new ArrayList<Partner>();
     private ListView listView;
     private ListPartnerAdapter adapter;
+    ImageButton btnTglChat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,14 +101,27 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        final NavigationView rightNav = (NavigationView)findViewById(R.id.right_nav);
         navigationView.setNavigationItemSelectedListener(this);
+
+        btnTglChat = (ImageButton)findViewById(R.id.tglChat);
+
+        btnTglChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (drawer.isDrawerOpen(rightNav)){
+                    drawer.closeDrawer(rightNav);
+                }
+                drawer.openDrawer(rightNav);
+            }
+        });
 
         /**
          * coba nampilin data dari sqlite
