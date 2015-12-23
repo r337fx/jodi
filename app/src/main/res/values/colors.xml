@@ -4,9 +4,34 @@
     <color name="colorPrimaryDark">#d32f2f</color>
     <color name="colorAccent">#e91e63</color>
     <color name="white">#fff</color>
+    <color name="navPrimary">#212121</color>
     <color name="input_login">#222222</color>
     <color name="input_login_hint">#999999</color>
     <color name="facebook">#4862A3</color>
     <color name="googleP">#ffffff</color>
     <color name="red">#f05a00</color>
+    <color name="gray_dk">#ff2c2c2c</color>
+    <color name="gray">#ff656464</color>
+    <color name="gray_divider">#ffe5e5e5</color>
+    <color name="white_smoke">#fff7f7f7</color>
+    <color name="black">#ff000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="main_color_red">#ffe33124</color>
+    <color name="main_color_red_light">#ffe6a9a9</color>
+    <color name="main_color_red_dk">#ffc62b1f</color>
+    <color name="holo_blue">#ff33e5b5</color>
+    <color name="green">#ff2ecc71</color>
+    <color name="theme_black">#ff313031</color>
+    <color name="theme_red">#ffe74c3c</color>
+    <color name="theme_green">#ff97e365</color>
+    <color name="theme_blue">#ff41b2ec</color>
+    <color name="red_light">#ffe74c3c</color>
+    <color name="blue_sky">#ff33b5e5</color>
+    <color name="listProfil">#666666</color>
+    <color name="list_divider">#d9d9d9</color>
+    <color name="list_row_start_color">#ffffff</color>
+    <color name="list_row_end_color">#ffffff</color>
+    <color name="list_row_hover_start_color">#ebeef0</color>
+    <color name="list_row_hover_end_color">#ebeef0</color>
+
 </resources>

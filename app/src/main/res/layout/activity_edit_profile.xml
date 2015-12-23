@@ -14,7 +14,7 @@
 
     </android.support.design.widget.AppBarLayout>
     <ScrollView
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="60dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -41,6 +41,7 @@
                 android:layout_weight="2"
                 android:text="Tingi Badan"/>
             <EditText
+                android:id="@+id/tinggi"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
@@ -63,6 +64,7 @@
                 android:layout_weight="1"
                 android:text="Etnis / Suku"/>
             <Spinner
+                android:id="@+id/suku"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -82,6 +84,7 @@
                 android:layout_weight="1"
                 android:text="Agama"/>
             <Spinner
+                android:id="@+id/agama"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -101,10 +104,11 @@
                 android:layout_weight="1"
                 android:text="Merokok"/>
             <Spinner
+                android:id="@+id/merokok"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:entries="@array/boolean_option">
+                android:entries="@array/list_ya_tidak">
 
             </Spinner>
         </LinearLayout>
@@ -120,10 +124,11 @@
                 android:layout_weight="1"
                 android:text="Minum Alkohol"/>
             <Spinner
+                android:id="@+id/alkohol"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:entries="@array/boolean_option">
+                android:entries="@array/list_ya_tidak">
 
             </Spinner>
         </LinearLayout>
@@ -139,10 +144,11 @@
                 android:layout_weight="1"
                 android:text="Horoskop"/>
             <Spinner
+                android:id="@+id/horoskop"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:entries="@array/ramalan">
+                android:entries="@array/list_horoskop">
 
             </Spinner>
         </LinearLayout>
@@ -158,6 +164,7 @@
                 android:layout_weight="1"
                 android:text="Pekerjaan"/>
             <Spinner
+                android:id="@+id/pekerjaan"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -177,6 +184,7 @@
                 android:layout_weight="1"
                 android:text="Lokasi"/>
             <Spinner
+                android:id="@+id/lokasi"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -196,6 +204,7 @@
                 android:layout_weight="1"
                 android:text="Deskripsikan diri anda:"/>
             <EditText
+                android:id="@+id/deskripsi"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -216,6 +225,7 @@
                 android:layout_weight="1"
                 android:text="Tipe pasangan yang Anda cari:"/>
             <EditText
+                android:id="@+id/tipe_pasangan"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -236,6 +246,7 @@
                 android:layout_weight="1"
                 android:text="Kegiatan saya sehari-hari:"/>
             <EditText
+                android:id="@+id/kegiatan"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
